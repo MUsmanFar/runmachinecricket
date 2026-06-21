@@ -1,0 +1,126 @@
+{
+  "entities": {
+    "Service": {
+      "title": "Service",
+      "description": "Cricket bat repair premium service offering.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "startingPrice": { "type": "number" },
+        "duration": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "beforeImageUrl": { "type": "string" },
+        "afterImageUrl": { "type": "string" }
+      },
+      "required": ["id", "title", "description", "startingPrice"]
+    },
+    "RepairRequest": {
+      "title": "RepairRequest",
+      "description": "Customer submission for repairing or refurbishing a cricket bat.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "whatsApp": { "type": "string" },
+        "city": { "type": "string" },
+        "country": { "type": "string" },
+        "serviceId": { "type": "string" },
+        "serviceName": { "type": "string" },
+        "batBrand": { "type": "string" },
+        "batCondition": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "preferredDate": { "type": "string" },
+        "preferredTime": { "type": "string" },
+        "deliveryMethod": { "type": "string" },
+        "status": { "type": "string", "enum": ["New", "Quote Sent", "Awaiting Shipment", "In Repair", "Completed", "Delivered"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "fullName", "email", "phone", "serviceId", "batBrand", "batCondition", "deliveryMethod", "status", "createdAt"]
+    },
+    "Testimonial": {
+      "title": "Testimonial",
+      "description": "Customer verification and rating of the refurbishment work.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "rating": { "type": "number" },
+        "review": { "type": "string" },
+        "batModel": { "type": "string" },
+        "serviceReceived": { "type": "string" },
+        "date": { "type": "string" }
+      },
+      "required": ["id", "name", "rating", "review"]
+    },
+    "Pricing": {
+      "title": "Pricing",
+      "description": "Detailed static/dynamic pricing list available in the pricing page.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "serviceGroup": { "type": "string" },
+        "serviceName": { "type": "string" },
+        "price": { "type": "string" },
+        "priceType": { "type": "string" }
+      },
+      "required": ["id", "serviceGroup", "serviceName", "price", "priceType"]
+    },
+    "LegalPage": {
+      "title": "LegalPage",
+      "description": "Legal policies that are editable on the dashboard.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "lastUpdated": { "type": "string" }
+      },
+      "required": ["id", "title", "content"]
+    },
+    "HomepageConfig": {
+      "title": "HomepageConfig",
+      "description": "Website editable elements for headlines/CTA.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "headline": { "type": "string" },
+        "subheadline": { "type": "string" },
+        "ctaText": { "type": "string" },
+        "whatsAppNumber": { "type": "string" }
+      },
+      "required": ["id", "headline"]
+    }
+  },
+  "firestore": {
+    "/services/{serviceId}": {
+      "schema": { "$ref": "Service" },
+      "description": "Dynamically loaded cricket bat repair services as seen on the website."
+    },
+    "/repair_requests/{requestId}": {
+      "schema": { "$ref": "RepairRequest" },
+      "description": "Submissions by customers inquiring for reparative craftsmanship."
+    },
+    "/testimonials/{testimonialId}": {
+      "schema": { "$ref": "Testimonial" },
+      "description": "Authentic feedback from cricket bat owners after bat workshop treatment."
+    },
+    "/pricing/{pricingId}": {
+      "schema": { "$ref": "Pricing" },
+      "description": "Specific pricing lines listed on the public pricing chart."
+    },
+    "/legal_pages/{pageId}": {
+      "schema": { "$ref": "LegalPage" },
+      "description": "Privacy policy, Terms & Conditions, Shipping policies, Refund policies, etc."
+    },
+    "/homepage/{configId}": {
+      "schema": { "$ref": "HomepageConfig" },
+      "description": "Public content configurations for custom headings and landing features."
+    }
+  }
+}

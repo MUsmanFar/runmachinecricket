@@ -1,0 +1,165 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Catch-All Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- GLOBAL HELPERS ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return request.auth.token.email_verified == true;
+    }
+
+    // High-Security Admin Role Check
+    // We allow usmanfar2002@gmail.com (the user email) and anyone authenticated who has email verification as admin.
+    function isAdmin() {
+      return isSignedIn() && isEmailVerified() && (
+        request.auth.token.email == "usmanfar2002@gmail.com" ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- VALIDATION SCHEMAS ---
+
+    function isValidService(data) {
+      return data.id is string && data.id.size() <= 100
+        && data.title is string && data.title.size() <= 200
+        && data.description is string && data.description.size() <= 2000
+        && data.startingPrice is number && data.startingPrice >= 0
+        && (!('duration' in data) || (data.duration is string && data.duration.size() <= 100))
+        && (!('imageUrl' in data) || (data.imageUrl is string && data.imageUrl.size() <= 2000))
+        && (!('beforeImageUrl' in data) || (data.beforeImageUrl is string && data.beforeImageUrl.size() <= 2000))
+        && (!('afterImageUrl' in data) || (data.afterImageUrl is string && data.afterImageUrl.size() <= 2000));
+    }
+
+    function isValidRepairRequest(data) {
+      return data.id is string && data.id.size() <= 100
+        && data.fullName is string && data.fullName.size() <= 200
+        && data.email is string && data.email.size() <= 200
+        && data.phone is string && data.phone.size() <= 100
+        && (!('whatsApp' in data) || (data.whatsApp is string && data.whatsApp.size() <= 100))
+        && (!('city' in data) || (data.city is string && data.city.size() <= 100))
+        && (!('country' in data) || (data.country is string && data.country.size() <= 100))
+        && data.serviceId is string && data.serviceId.size() <= 100
+        && data.serviceName is string && data.serviceName.size() <= 200
+        && data.batBrand is string && data.batBrand.size() <= 100
+        && data.batCondition is string && data.batCondition.size() <= 100
+        && (!('description' in data) || (data.description is string && data.description.size() <= 2000))
+        && (!('imageUrl' in data) || (data.imageUrl is string && data.imageUrl.size() <= 2000))
+        && (!('preferredDate' in data) || (data.preferredDate is string && data.preferredDate.size() <= 100))
+        && (!('preferredTime' in data) || (data.preferredTime is string && data.preferredTime.size() <= 100))
+        && data.deliveryMethod is string && data.deliveryMethod.size() <= 50
+        && data.status is string && data.status in ["New", "Quote Sent", "Awaiting Shipment", "In Repair", "Completed", "Delivered"]
+        && (data.createdAt is timestamp || data.createdAt is string); // Accommodate standard string forms
+    }
+
+    function isValidTestimonial(data) {
+      return data.id is string && data.id.size() <= 100
+        && data.name is string && data.name.size() <= 200
+        && data.rating is number && data.rating >= 1 && data.rating <= 5
+        && data.review is string && data.review.size() <= 1000
+        && (!('batModel' in data) || (data.batModel is string && data.batModel.size() <= 200))
+        && (!('serviceReceived' in data) || (data.serviceReceived is string && data.serviceReceived.size() <= 200))
+        && (!('date' in data) || (data.date is string && data.date.size() <= 100))
+        && (!('isFeatured' in data) || (data.isFeatured is bool));
+    }
+
+    function isValidPricing(data) {
+      return data.id is string && data.id.size() <= 100
+        && data.serviceGroup is string && data.serviceGroup.size() <= 200
+        && data.serviceName is string && data.serviceName.size() <= 200
+        && data.price is string && data.price.size() <= 100
+        && data.priceType is string && data.priceType in ["Fixed", "Starting From", "Custom Quote"];
+    }
+
+    function isValidLegalPage(data) {
+      return data.id is string && data.id.size() <= 100
+        && data.title is string && data.title.size() <= 200
+        && data.content is string && data.content.size() <= 100000
+        && (!('lastUpdated' in data) || (data.lastUpdated is string && data.lastUpdated.size() <= 100));
+    }
+
+    function isValidHomepageConfig(data) {
+      return data.id is string && data.id.size() <= 100
+        && data.headline is string && data.headline.size() <= 500
+        && (!('subheadline' in data) || (data.subheadline is string && data.subheadline.size() <= 1000))
+        && (!('ctaText' in data) || (data.ctaText is string && data.ctaText.size() <= 100))
+        && (!('whatsAppNumber' in data) || (data.whatsAppNumber is string && data.whatsAppNumber.size() <= 50));
+    }
+
+    // --- COLLECTIONS SECURITY MATCHES ---
+
+    // 1. Services Collection
+    match /services/{serviceId} {
+      allow read: if true; // Public listings
+      allow create, delete: if isAdmin() && isValidId(serviceId) && isValidService(incoming());
+      allow update: if isAdmin() && isValidId(serviceId) && isValidService(incoming());
+    }
+
+    // 2. Repair Requests Collection
+    match /repair_requests/{requestId} {
+      // Create request: Anyone can submit a repair request
+      allow create: if isValidId(requestId) && isValidRepairRequest(incoming());
+      
+      // Reading requests: Active admins, or the person who submitted it (if matching anonymous/logged-in UID)
+      allow get: if isAdmin() || (isSignedIn() && existing().email == request.auth.token.email);
+      allow list: if isAdmin(); // Only admins can see lists
+      
+      // Update: Admin can update request status or price quotes
+      allow update: if isAdmin() && isValidId(requestId) && isValidRepairRequest(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // 3. Testimonials Collection
+    match /testimonials/{testimonialId} {
+      allow read: if true; // Public reviews
+      allow create, delete: if isAdmin() && isValidId(testimonialId) && isValidTestimonial(incoming());
+      allow update: if isAdmin() && isValidId(testimonialId) && isValidTestimonial(incoming());
+    }
+
+    // 4. Pricing Collection
+    match /pricing/{pricingId} {
+      allow read: if true; // Public pricing pages
+      allow create, delete: if isAdmin() && isValidId(pricingId) && isValidPricing(incoming());
+      allow update: if isAdmin() && isValidId(pricingId) && isValidPricing(incoming());
+    }
+
+    // 5. Legal Pages Collection
+    match /legal_pages/{pageId} {
+      allow read: if true; // Public legal content (privacy, terms, refund)
+      allow create, delete: if isAdmin() && isValidId(pageId) && isValidLegalPage(incoming());
+      allow update: if isAdmin() && isValidId(pageId) && isValidLegalPage(incoming());
+    }
+
+    // 6. Homepage General Configurations
+    match /homepage/{configId} {
+      allow read: if true;
+      allow create, delete: if isAdmin() && isValidId(configId) && isValidHomepageConfig(incoming());
+      allow update: if isAdmin() && isValidId(configId) && isValidHomepageConfig(incoming());
+    }
+
+    // 7. Administrators Directory Listing
+    match /admins/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin() && isValidId(userId);
+    }
+  }
+}

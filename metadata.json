@@ -1,0 +1,8 @@
+{
+  "name": "Run Machine Cricket",
+  "description": "Premium Cricket Bat Repair & Refurbishment Platform with dynamic service booking and interactive repair request management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

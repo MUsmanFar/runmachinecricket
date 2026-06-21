@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", sans-serif;
+  --font-mono: "Poppins", sans-serif;
+  --font-display: "Poppins", sans-serif;
+
+  --color-brand-red: #D6001C;
+  --color-brand-red-hover: #b50015;
+  --color-brand-black: #111111;
+  --color-brand-gray: #f5f5f5;
+  --color-brand-border: #e5e5e5;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  background: #111111;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D6001C;
+}
+
+/* Glassmorphism style helper */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(17, 17, 17, 0.06);
+}
+
+.dark-glass-card {
+  background: rgba(17, 17, 17, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
