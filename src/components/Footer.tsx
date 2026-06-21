@@ -39,49 +39,57 @@ export default function Footer({ onNavigate, onNavigateLegal }: FooterProps) {
   };
 
   return (
-    <footer className="bg-brand-black text-gray-400 border-t border-gray-900 pt-16 pb-8">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4 md:gap-8">
+    <footer className="bg-brand-black text-gray-400 border-t-4 border-brand-red pt-24 pb-12 relative overflow-hidden">
+      
+      {/* Massive subtle watermark */}
+      <div className="absolute -bottom-20 -right-20 text-[200px] text-white/[0.02] font-black pointer-events-none uppercase tracking-tighter leading-none select-none">
+        RMC
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 gap-16 md:grid-cols-4 md:gap-12">
           
           {/* Brand Presentation */}
-          <div className="space-y-4">
+          <div className="space-y-6 md:col-span-1">
             <div className="flex items-center space-x-3 text-white">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-red text-white">
-                <Hammer className="h-4.5 w-4.5" />
+              <div className="flex h-12 w-12 items-center justify-center bg-brand-red text-white shadow-[0_0_20px_rgba(255,0,0,0.4)]">
+                <Hammer className="h-6 w-6" />
               </div>
-              <span className="font-sans font-extrabold text-lg tracking-tight uppercase">
-                RUN MACHINE
+              <span className="font-sans font-black text-2xl tracking-tighter uppercase leading-none">
+                RUN<br/>MACHINE
               </span>
             </div>
             
-            <p className="text-xs text-gray-400 leading-relaxed font-sans">
-              Run Machine Cricket represents ultimate elite craftsmanship. We specialize in repair, Singapore cane handle refitting, crack binding, structural reinforcement, dynamic balance adjustment, and comprehensive bat restorations.
+            <p className="text-sm text-gray-500 leading-relaxed font-sans font-light">
+              Run Machine Cricket represents ultimate elite craftsmanship. We specialize in precision repair, structural reinforcement, and comprehensive English willow restorations.
             </p>
 
-            <div className="space-y-2 pt-2 text-xs">
-              <div className="flex items-center space-x-2">
+            <div className="space-y-4 pt-4 text-xs font-mono tracking-widest uppercase">
+              <div className="flex items-center space-x-3 text-white">
                 <MapPin className="h-4 w-4 text-brand-red" />
-                <span>London Road workshop, United Kingdom</span>
+                <span>London Road, UK</span>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3 text-white">
                 <Mail className="h-4 w-4 text-brand-red" />
-                <span>craft@runmachinecricket.co.uk</span>
+                <span>craft@runmachine.co.uk</span>
               </div>
             </div>
           </div>
 
           {/* Quick Links Column */}
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-brand-red pl-2">
-              Explore Services
+            <h4 className="text-sm font-black text-white uppercase tracking-[0.2em] mb-6 flex items-center">
+              <span className="w-4 h-1 bg-brand-red mr-3"></span>
+              Services
             </h4>
-            <ul className="space-y-2 text-xs font-medium">
+            <ul className="space-y-4 text-xs font-mono uppercase tracking-widest text-gray-500">
               {servicesLinks.map((link) => (
                 <li key={link.id}>
                   <button
                     onClick={() => handleServiceClick(link.id)}
-                    className="hover:text-white transition-colors duration-200 text-left cursor-pointer"
+                    className="hover:text-brand-red transition-colors duration-300 text-left cursor-pointer flex items-center group"
                   >
+                    <span className="w-0 h-px bg-brand-red mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-300"></span>
                     {link.label}
                   </button>
                 </li>
@@ -91,16 +99,18 @@ export default function Footer({ onNavigate, onNavigateLegal }: FooterProps) {
 
           {/* Website Navigation Column */}
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-brand-red pl-2">
-              Quick Navigation
+            <h4 className="text-sm font-black text-white uppercase tracking-[0.2em] mb-6 flex items-center">
+              <span className="w-4 h-1 bg-brand-red mr-3"></span>
+              Navigation
             </h4>
-            <ul className="space-y-2 text-xs font-medium">
+            <ul className="space-y-4 text-xs font-mono uppercase tracking-widest text-gray-500">
               {quickLinks.map((link) => (
                 <li key={link.id}>
                   <button
                     onClick={() => onNavigate(link.id)}
-                    className="hover:text-white transition-colors duration-200 text-left cursor-pointer"
+                    className="hover:text-brand-red transition-colors duration-300 text-left cursor-pointer flex items-center group"
                   >
+                    <span className="w-0 h-px bg-brand-red mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-300"></span>
                     {link.label}
                   </button>
                 </li>
@@ -110,44 +120,46 @@ export default function Footer({ onNavigate, onNavigateLegal }: FooterProps) {
 
           {/* Legal Documents Column */}
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-brand-red pl-2">
-              Legal & Framework
+            <h4 className="text-sm font-black text-white uppercase tracking-[0.2em] mb-6 flex items-center">
+              <span className="w-4 h-1 bg-brand-red mr-3"></span>
+              Legal
             </h4>
-            <ul className="space-y-2 text-xs font-medium">
+            <ul className="space-y-4 text-xs font-mono uppercase tracking-widest text-gray-500">
               {legalLinks.map((link) => (
                 <li key={link.id}>
                   <button
                     onClick={() => onNavigateLegal(link.id)}
-                    className="hover:text-white transition-colors duration-200 text-left cursor-pointer"
+                    className="hover:text-brand-red transition-colors duration-300 text-left cursor-pointer flex items-center group"
                   >
+                    <span className="w-0 h-px bg-brand-red mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-300"></span>
                     {link.label}
                   </button>
                 </li>
               ))}
             </ul>
             
-            <div className="mt-6 flex space-x-3">
+            <div className="mt-8 flex flex-col space-y-3">
               <a
                 href="https://wa.me/447700900077"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center space-x-1.5 rounded-lg bg-brand-red/10 border border-brand-red/20 px-3 py-1.5 text-xs text-brand-red font-semibold hover:bg-brand-red hover:text-white transition-all"
+                className="flex items-center justify-center space-x-2 bg-brand-red px-4 py-3 text-[10px] text-white font-black tracking-[0.2em] uppercase hover:bg-white hover:text-brand-black transition-colors duration-300 shadow-lg shadow-brand-red/20"
               >
-                <MessageSquare className="h-3.5 w-3.5" />
+                <MessageSquare className="h-4 w-4" />
                 <span>WhatsApp Active</span>
               </a>
-              <div className="flex items-center space-x-1 text-brand-red text-xs font-semibold bg-brand-red/5 px-3 py-1.5 border border-brand-red/10 rounded-lg">
-                <ShieldCheck className="h-3.5 w-3.5" />
-                <span>Fully Secure DB</span>
+              <div className="flex items-center justify-center space-x-2 text-white text-[10px] font-black tracking-[0.2em] uppercase bg-white/5 px-4 py-3 border border-white/10">
+                <ShieldCheck className="h-4 w-4 text-brand-red" />
+                <span>Secure Platform</span>
               </div>
             </div>
           </div>
 
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-900 flex flex-col md:flex-row items-center justify-between text-xs text-gray-500">
-          <p>© {currentYear} Run Machine Cricket. All rights preserved under strict copyright policies.</p>
-          <p className="mt-2 md:mt-0">Premium Handcrafted Service Framework • Designed in UK</p>
+        <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-[10px] font-mono tracking-[0.2em] uppercase text-gray-600">
+          <p>© {currentYear} RUN MACHINE CRICKET.</p>
+          <p className="mt-4 md:mt-0">DESIGNED FOR EXCELLENCE • UK</p>
         </div>
       </div>
     </footer>

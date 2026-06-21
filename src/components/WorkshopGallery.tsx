@@ -59,17 +59,17 @@ export default function WorkshopGallery({ items }: WorkshopGalleryProps) {
         </div>
 
         {/* Masonry Layout Grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
           <AnimatePresence mode="popLayout">
             {filteredItems.map((item) => (
               <motion.div
                 key={item.id}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-                className="break-inside-avoid relative rounded-3xl overflow-hidden bg-brand-gray border border-gray-100 group shadow-md"
+                transition={{ duration: 0.5 }}
+                className="break-inside-avoid relative overflow-hidden bg-brand-black group shadow-xl"
               >
                 {/* Image Wrap */}
                 <div 
@@ -81,22 +81,23 @@ export default function WorkshopGallery({ items }: WorkshopGalleryProps) {
                     alt={item.title}
                     referrerPolicy="no-referrer"
                     loading="lazy"
-                    className="w-full h-auto max-h-[35rem] object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    className="w-full h-auto object-cover opacity-90 transition-all duration-700 ease-out group-hover:scale-110 group-hover:opacity-100"
                   />
                   
                   {/* Subtle Top-Right Category Badge */}
-                  <span className="absolute top-4 right-4 bg-brand-black/90 text-white font-mono text-[10px] uppercase font-black py-1.5 px-3 rounded-lg z-10 border border-white/10 tracking-widest shadow-sm">
+                  <span className="absolute top-4 right-4 bg-brand-red text-white font-mono text-[9px] uppercase font-black py-1.5 px-3 tracking-[0.2em] shadow-lg">
                     {item.category}
                   </span>
 
                   {/* Dark Overlap Reveal */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/40 to-transparent opacity-0 group-hover:opacity-105 transition-opacity duration-300 flex flex-col justify-end p-6 sm:p-8">
-                    <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 space-y-2">
-                      <p className="text-white text-lg font-extrabold tracking-tight uppercase">
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6 sm:p-8">
+                    <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 space-y-3">
+                      <div className="w-8 h-1 bg-brand-red" />
+                      <p className="text-white text-xl font-black tracking-tighter uppercase leading-none">
                         {item.title}
                       </p>
                       {item.description && (
-                        <p className="text-gray-300 text-xs leading-relaxed">
+                        <p className="text-gray-300 text-sm font-light leading-relaxed">
                           {item.description}
                         </p>
                       )}

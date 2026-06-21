@@ -27,49 +27,49 @@ export default function BeforeAfterSlider() {
   };
 
   return (
-    <section className="bg-brand-black py-16 sm:py-24 overflow-hidden border-t border-brand-red/20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <p className="text-xs font-mono font-black tracking-widest text-brand-red uppercase">
+    <section className="bg-brand-black py-20 sm:py-32 overflow-hidden border-t border-brand-red/10">
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-4xl mx-auto mb-20 space-y-6">
+          <p className="text-[10px] sm:text-xs font-mono font-black tracking-[0.2em] text-brand-red uppercase">
             CRAFTSMANSHIP REVEALED
           </p>
-          <h2 className="text-3xl sm:text-5xl font-sans font-black tracking-tight text-white uppercase">
-            Night & Day Transformation
+          <h2 className="text-4xl sm:text-6xl font-sans font-black tracking-tighter text-white uppercase leading-none">
+            Night & Day <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600">Transformation</span>
           </h2>
-          <p className="text-sm text-gray-400 font-sans leading-relaxed">
+          <p className="text-sm sm:text-base text-gray-400 font-sans leading-relaxed max-w-2xl mx-auto font-light">
             Drag the slider to see how our workshop revives completely shattered English willow back to pristine match-ready condition.
           </p>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex justify-center w-full">
           <div 
             ref={containerRef}
-            className="relative w-full max-w-4xl aspect-video rounded-3xl overflow-hidden select-none cursor-ew-resize border border-white/10 shadow-2xl bg-brand-gray/5"
+            className="relative w-full aspect-video sm:aspect-[21/9] overflow-hidden select-none cursor-ew-resize border border-white/5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] bg-brand-black"
             onPointerDown={handlePointerDown}
             onPointerMove={(e) => e.buttons === 1 && handleDrag(e)}
             onTouchMove={handleDrag}
           >
             {/* After Image (Background) */}
             <img 
-              src="https://images.unsplash.com/photo-1593341646782-e0b495cff86d?auto=format&fit=crop&q=80&w=1200" 
+              src="https://images.unsplash.com/photo-1593341646782-e0b495cff86d?auto=format&fit=crop&q=80&w=2400" 
               alt="Bat After Repair" 
               className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               loading="lazy"
             />
-            <div className="absolute top-4 right-4 bg-brand-red text-white text-[10px] font-black tracking-widest uppercase px-3 py-1.5 rounded-lg border border-white/20 shadow-lg z-10">
+            <div className="absolute bottom-6 right-6 bg-brand-black text-white text-[11px] font-black tracking-[0.2em] uppercase px-5 py-3 shadow-2xl z-10 border border-white/10">
               After Renovation
             </div>
 
             {/* Before Image (Foreground, Clipped via clip-path) */}
             <img 
-              src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=1200" 
+              src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=2400" 
               alt="Bat Before Repair" 
               className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10"
               style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
               loading="lazy"
             />
             <div 
-              className="absolute top-4 left-4 bg-brand-black text-white text-[10px] font-black tracking-widest uppercase px-3 py-1.5 rounded-lg border border-white/20 shadow-lg z-20"
+              className="absolute bottom-6 left-6 bg-brand-red text-white text-[11px] font-black tracking-[0.2em] uppercase px-5 py-3 shadow-2xl z-20"
               style={{ clipPath: `inset(0 ${sliderPosition < 15 ? 100 : 0}% 0 0)` }}
             >
               Shattered Damage
@@ -77,11 +77,11 @@ export default function BeforeAfterSlider() {
 
             {/* Slider Handle */}
             <div 
-              className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)] flex items-center justify-center pointer-events-none z-30"
-              style={{ left: `calc(${sliderPosition}% - 2px)` }}
+              className="absolute top-0 bottom-0 w-0.5 bg-brand-red shadow-[0_0_15px_rgba(255,0,0,0.8)] flex items-center justify-center pointer-events-none z-30"
+              style={{ left: `calc(${sliderPosition}% - 1px)` }}
             >
-              <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.5)] border border-gray-200">
-                <ArrowLeftRight className="h-5 w-5 text-brand-black" />
+              <div className="h-12 w-12 bg-brand-red text-white flex items-center justify-center shadow-[0_0_20px_rgba(255,0,0,0.5)] transition-transform group-hover:scale-110">
+                <ArrowLeftRight className="h-5 w-5" />
               </div>
             </div>
           </div>

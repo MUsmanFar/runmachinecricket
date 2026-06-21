@@ -25,74 +25,72 @@ export default function TestimonialsSlider({ testimonials }: TestimonialsSliderP
   const activeReview = testimonials[activeIndex];
 
   return (
-    <section className="bg-gray-50 py-16 sm:py-24 overflow-hidden border-b border-gray-100">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="bg-brand-black py-24 sm:py-32 overflow-hidden border-t border-brand-red/10 relative">
+      <div className="absolute top-0 right-0 -mr-24 -mt-24 h-[600px] w-[600px] rounded-full bg-brand-red/5 blur-[100px] pointer-events-none" />
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <p className="text-xs font-mono font-black tracking-widest text-brand-red uppercase">
-            CLIENT TESTIMONIALS & PROOFS
+        <div className="text-center max-w-2xl mx-auto mb-20 space-y-6">
+          <p className="text-[10px] sm:text-xs font-mono font-black tracking-[0.2em] text-brand-red uppercase">
+            CLIENT PROOFS
           </p>
-          <h2 className="text-3xl sm:text-5xl font-sans font-black tracking-tight text-brand-black uppercase">
-            Trusted By Elite Cricketers
+          <h2 className="text-4xl sm:text-6xl font-sans font-black tracking-tighter text-white uppercase leading-none">
+            Trusted By <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600">Pros</span>
           </h2>
-          <p className="text-sm text-gray-500 font-sans leading-relaxed">
-            Hear from first-class professionals and local league players about how our bat repairs saved their seasons.
-          </p>
         </div>
 
         {/* Slider Frame */}
-        <div className="relative max-w-4xl mx-auto bg-white rounded-3xl border border-gray-100 p-8 sm:p-12 shadow-2xl shadow-gray-200/50">
+        <div className="relative max-w-5xl mx-auto bg-brand-black border border-white/10 p-10 sm:p-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)]">
           
-          <div className="absolute top-8 right-8 text-gray-100 hidden sm:block">
-            <Quote className="h-16 w-16 transform rotate-180" />
+          <div className="absolute top-10 right-10 text-white/5 hidden sm:block">
+            <Quote className="h-24 w-24 transform rotate-180" />
           </div>
 
           <AnimatePresence mode="wait">
             <motion.div
               key={activeReview.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-10"
             >
               {/* Rating representation */}
-              <div className="flex items-center space-x-1 text-amber-500">
+              <div className="flex items-center space-x-2 text-brand-red">
                 {Array.from({ length: activeReview.rating }).map((_, i) => (
-                  <Star key={i} className="h-5 w-5 fill-current" />
+                  <Star key={i} className="h-6 w-6 fill-current" />
                 ))}
               </div>
 
               {/* Review content body */}
-              <blockquote className="text-lg sm:text-xl font-sans font-medium text-gray-900 leading-relaxed italic">
+              <blockquote className="text-2xl sm:text-4xl font-sans font-black text-white leading-[1.2] uppercase tracking-tight">
                 "{activeReview.review}"
               </blockquote>
 
               {/* Client specifications and device details */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-gray-50">
-                <div className="flex items-center space-x-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-10 border-t border-white/10">
+                <div className="flex items-center space-x-6">
                   {/* Premium Avatar */}
                   <img 
                     src={`https://i.pravatar.cc/150?u=${activeReview.id}`} 
                     alt={activeReview.name}
-                    className="h-12 w-12 rounded-full object-cover border-2 border-brand-red/20 shadow-md"
+                    className="h-16 w-16 grayscale object-cover border-2 border-brand-red shadow-2xl"
                     loading="lazy"
                   />
                   <div>
-                    <h4 className="text-base font-bold text-gray-900 font-sans tracking-tight">
+                    <h4 className="text-xl font-black text-white font-sans tracking-tight uppercase">
                       {activeReview.name}
                     </h4>
-                    <p className="text-[10px] text-gray-400 font-mono tracking-widest uppercase mt-0.5">
+                    <p className="text-[10px] text-gray-500 font-mono tracking-[0.2em] uppercase mt-1">
                       {activeReview.date || "Verified Player"}
                     </p>
                   </div>
                 </div>
 
                 {activeReview.batModel && (
-                  <div className="flex items-center space-x-3 text-xs bg-brand-gray border border-gray-100 px-4 py-2 rounded-xl">
-                    <span className="font-bold text-gray-500 uppercase tracking-wider font-sans">Bat Treated:</span>
-                    <span className="font-black text-brand-red uppercase tracking-tight">{activeReview.batModel}</span>
+                  <div className="flex items-center space-x-3 text-xs bg-white/5 border border-white/10 px-5 py-3">
+                    <span className="font-mono text-[9px] font-bold text-gray-500 uppercase tracking-[0.2em]">Bat Treated:</span>
+                    <span className="font-black text-white uppercase tracking-tight">{activeReview.batModel}</span>
                   </div>
                 )}
               </div>
@@ -100,23 +98,23 @@ export default function TestimonialsSlider({ testimonials }: TestimonialsSliderP
           </AnimatePresence>
 
           {/* Interactive Navigation Elements */}
-          <div className="flex items-center justify-end space-x-4 mt-8 pt-4 border-t border-gray-50 sm:absolute sm:bottom-12 sm:right-12 sm:mt-0 sm:border-0 sm:pt-0">
+          <div className="flex items-center justify-end space-x-6 mt-12 pt-6 border-t border-white/10 sm:absolute sm:top-10 sm:right-10 sm:mt-0 sm:border-0 sm:pt-0">
             <button
               onClick={handlePrev}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-50 border border-gray-100 text-gray-600 hover:bg-gray-100 transition-colors"
+              className="flex h-12 w-12 items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-brand-red transition-all duration-300"
               id="slider-nav-prev"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-6 w-6" />
             </button>
-            <span className="text-xs font-mono font-bold text-gray-400">
+            <span className="text-[10px] font-mono font-black text-gray-500 tracking-[0.2em]">
               {activeIndex + 1} / {testimonials.length}
             </span>
             <button
               onClick={handleNext}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-50 border border-gray-100 text-gray-600 hover:bg-gray-100 transition-colors"
+              className="flex h-12 w-12 items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-brand-red transition-all duration-300"
               id="slider-nav-next"
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-6 w-6" />
             </button>
           </div>
 

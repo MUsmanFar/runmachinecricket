@@ -46,58 +46,62 @@ export default function FeaturedServices({
             <div
               key={service.id}
               id={`service-card-${service.id}`}
-              className="group flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-2xl hover:shadow-gray-200/50 hover:border-brand-red/10 hover:-translate-y-1.5"
+              className="group flex flex-col overflow-hidden bg-brand-black border border-white/5 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] hover:border-brand-red/30"
             >
               {/* Service Hero Image with premium hover Zoom */}
-              <div className="relative h-56 overflow-hidden bg-brand-gray">
+              <div className="relative h-64 overflow-hidden bg-brand-black">
                 <img
                   src={
                     service.imageUrl ||
-                    "https://images.unsplash.com/photo-1540747737956-37872404797a?auto=format&fit=crop&q=80&w=800"
+                    "https://images.unsplash.com/photo-1607734834834-d4d4850ef3fa?auto=format&fit=crop&q=80&w=800"
                   }
                   alt={service.title}
                   referrerPolicy="no-referrer"
                   loading="lazy"
-                  className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
+                  className="h-full w-full object-cover object-center opacity-80 transition-all duration-700 ease-out group-hover:scale-110 group-hover:opacity-100"
                 />
                 
                 {/* Meta price tag overlay */}
-                <div className="absolute top-4 right-4 flex items-center space-x-1 rounded-xl bg-brand-black/90 py-1.5 px-3.5 text-[10px] font-mono font-black text-white tracking-widest backdrop-blur-sm border border-white/10">
-                  <Tag className="h-3 w-3 text-brand-red" />
-                  <span>FROM £{service.startingPrice}</span>
+                <div className="absolute top-4 right-4 bg-brand-red py-1.5 px-4 text-[10px] font-mono font-black text-white tracking-[0.2em] uppercase shadow-lg">
+                  FROM £{service.startingPrice}
                 </div>
               </div>
 
               {/* Card Meta Content Info */}
-              <div className="flex flex-1 flex-col p-6 sm:p-8">
+              <div className="flex flex-1 flex-col p-6 sm:p-8 bg-white relative">
                 
-                <div className="flex items-center space-x-2 text-[9px] font-mono tracking-widest text-brand-red uppercase font-black mb-3">
-                  <Clock className="h-3 w-3 text-brand-red" />
-                  <span>{service.duration || "3 Days Turnaround"}</span>
+                {/* Decorative Accent Line */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-red to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-2 text-[10px] font-mono tracking-[0.15em] text-gray-500 uppercase font-black">
+                    <Clock className="h-3.5 w-3.5 text-brand-red" />
+                    <span>{service.duration || "3 Days"}</span>
+                  </div>
                 </div>
 
-                <h3 className="text-lg font-black text-brand-black group-hover:text-brand-red transition-colors mb-3 uppercase tracking-tight">
+                <h3 className="text-xl font-black text-brand-black group-hover:text-brand-red transition-colors duration-300 mb-3 uppercase tracking-tighter leading-none">
                   {service.title}
                 </h3>
                 
-                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-sans mb-6 line-clamp-3">
+                <p className="text-sm text-gray-500 leading-relaxed font-sans mb-8 line-clamp-3">
                   {service.description}
                 </p>
 
                 {/* Card Action Alignment Buttons */}
-                <div className="mt-auto grid grid-cols-2 gap-4 pt-4 border-t border-brand-gray">
+                <div className="mt-auto grid grid-cols-2 gap-3 pt-6 border-t border-gray-100">
                   <button
                     onClick={() => onSelectService(service.id)}
-                    className="flex items-center justify-center rounded-xl bg-brand-gray border border-gray-100 py-3.5 text-xs font-black uppercase tracking-wider text-gray-700 hover:bg-brand-black hover:text-white hover:border-brand-black transition-all cursor-pointer font-sans"
+                    className="flex items-center justify-center bg-gray-50 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 hover:bg-brand-black hover:text-white transition-colors duration-300 cursor-pointer"
                   >
-                    View Details
+                    Details
                   </button>
 
                   <button
                     onClick={() => onBookService(service)}
-                    className="flex items-center justify-center rounded-xl bg-brand-red py-3.5 text-xs font-black uppercase tracking-wider text-white shadow-md shadow-brand-red/10 hover:bg-brand-black transition-all cursor-pointer font-sans"
+                    className="flex items-center justify-center bg-brand-red py-4 text-[10px] font-black uppercase tracking-[0.2em] text-white hover:bg-brand-black transition-colors duration-300 cursor-pointer shadow-lg shadow-brand-red/20"
                   >
-                    Book Repair
+                    Book Now
                   </button>
                 </div>
 

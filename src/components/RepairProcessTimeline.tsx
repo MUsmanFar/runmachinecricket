@@ -55,62 +55,78 @@ export default function RepairProcessTimeline() {
   ];
 
   return (
-    <section className="bg-brand-gray py-16 sm:py-24 border-b border-gray-100 overflow-hidden">
+    <section className="bg-white py-24 sm:py-32 border-b border-gray-100 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-          <p className="text-xs font-mono font-black tracking-widest text-brand-red uppercase">
+        <div className="text-center max-w-3xl mx-auto mb-24 space-y-6">
+          <p className="text-[10px] sm:text-xs font-mono font-black tracking-[0.2em] text-brand-red uppercase">
             HOW WE RESTORE THE POWER
           </p>
-          <h2 className="text-3xl sm:text-5xl font-sans font-black tracking-tight text-brand-black uppercase">
-            Our Professional Repair Journey
+          <h2 className="text-4xl sm:text-6xl font-sans font-black tracking-tighter text-brand-black uppercase leading-none">
+            The Repair <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600">Journey</span>
           </h2>
-          <p className="text-sm sm:text-base text-gray-500 font-sans leading-relaxed">
+          <p className="text-sm sm:text-base text-gray-500 font-sans leading-relaxed max-w-2xl mx-auto font-light">
             Every bat undergoes our rigorous 6-step workshop workflow. We handle your equipment with supreme dedication to ensure it returns match-ready.
           </p>
         </div>
 
         {/* Vertical Journey Timeline */}
-        <div className="relative max-w-4xl mx-auto">
-          {/* Vertical Connecting Line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand-red/20 via-brand-black/20 to-transparent -translate-x-1/2" />
+        <div className="relative max-w-5xl mx-auto">
+          {/* Heavy Vertical Connecting Line */}
+          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-brand-gray -translate-x-1/2" />
+          {/* Animated fill line */}
+          <motion.div 
+            className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-brand-red -translate-x-1/2 origin-top"
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 2, ease: "easeInOut" }}
+          />
 
-          <div className="space-y-12">
+          <div className="space-y-16 sm:space-y-24">
             {steps.map((step, idx) => {
               const isEven = idx % 2 === 0;
               return (
                 <motion.div
                   key={step.num}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
+                  transition={{ duration: 0.7, delay: 0.2 }}
                   className={`relative flex flex-col md:flex-row items-center justify-between group ${isEven ? "md:flex-row-reverse" : ""}`}
                 >
                   {/* Timeline Center Node */}
-                  <div className="absolute left-8 md:left-1/2 w-12 h-12 bg-white rounded-full border-4 border-brand-gray flex items-center justify-center -translate-x-1/2 z-10 shadow-lg group-hover:border-brand-red group-hover:scale-110 transition-all duration-300">
-                    <span className="text-[10px] font-mono font-black text-brand-black">{step.num}</span>
+                  <div className="absolute left-8 md:left-1/2 w-14 h-14 bg-brand-black rounded-none flex items-center justify-center -translate-x-1/2 z-10 shadow-2xl transition-transform duration-500 group-hover:scale-125 group-hover:rotate-12 group-hover:bg-brand-red border border-white/10">
+                    <span className="text-[12px] font-mono font-black text-white">{step.num}</span>
                   </div>
 
                   {/* Empty space for alternating layout */}
                   <div className="hidden md:block w-[45%]" />
 
                   {/* Content Card */}
-                  <div className="w-full md:w-[45%] pl-20 md:pl-0">
-                    <div className="bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 hover:shadow-xl hover:border-brand-red/20 transition-all duration-300 relative overflow-hidden">
-                      <div className={`absolute top-0 ${isEven ? 'right-0 rounded-bl-3xl' : 'left-0 rounded-br-3xl'} p-4 ${step.color} transition-colors`}>
-                        {step.icon}
+                  <div className="w-full md:w-[45%] pl-24 md:pl-0">
+                    <div className="bg-white border-none p-8 sm:p-10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-15px_rgba(255,0,0,0.15)] transition-all duration-500 relative overflow-hidden group-hover:-translate-y-2">
+                      {/* Subdued number watermark */}
+                      <div className="absolute -right-4 -top-8 text-[120px] font-black text-brand-gray/30 select-none transition-transform duration-500 group-hover:scale-110">
+                        {step.num}
                       </div>
 
-                      <div className="mt-8">
-                        <h3 className="text-lg font-black text-brand-black mb-2 uppercase tracking-tight">
+                      <div className="relative z-10">
+                        <div className={`inline-flex mb-6 p-4 rounded-full ${step.color} bg-opacity-10 transition-colors`}>
+                          {step.icon}
+                        </div>
+
+                        <h3 className="text-2xl font-black text-brand-black mb-3 uppercase tracking-tighter">
                           {step.title}
                         </h3>
-                        <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-sans">
+                        <p className="text-sm text-gray-500 leading-relaxed font-sans font-light">
                           {step.desc}
                         </p>
                       </div>
+                      
+                      {/* Hover bottom line indicator */}
+                      <div className="absolute bottom-0 left-0 w-0 h-1 bg-brand-red transition-all duration-500 group-hover:w-full" />
                     </div>
                   </div>
                 </motion.div>
