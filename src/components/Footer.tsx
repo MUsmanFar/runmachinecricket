@@ -31,18 +31,13 @@ export default function Footer({ onNavigate, onNavigateLegal }: FooterProps) {
           
           {/* LEFT: Brand Presentation */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-3 text-white">
-              <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center bg-brand-red text-white shadow-[0_0_15px_rgba(255,0,0,0.3)]">
-                <Hammer className="h-5 w-5 sm:h-6 sm:w-6" id="footer-logo-icon" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-sans font-black text-xl sm:text-2xl tracking-tighter uppercase leading-none">
-                  Run Machine
-                </span>
-                <span className="text-[9px] font-sans font-bold tracking-[0.2em] text-gray-500 uppercase mt-1">
-                  Cricket
-                </span>
-              </div>
+            <div className="flex items-center text-white">
+              <img 
+                src="/logo.png" 
+                alt="Run Machine Cricket Logo" 
+                className="h-12 sm:h-16 object-contain" 
+                id="official-logo-footer"
+              />
             </div>
             
             <p className="text-sm text-gray-500 leading-relaxed font-sans font-light">

@@ -31,21 +31,14 @@ export default function Header({ currentView, onNavigate }: HeaderProps) {
         {/* Brand Logo Container */}
         <div
           onClick={() => handleLinkClick("home")}
-          className="flex cursor-pointer items-center space-x-4 transition-opacity hover:opacity-80 shrink-0"
+          className="flex cursor-pointer items-center transition-opacity hover:opacity-80 shrink-0"
         >
-          <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center bg-brand-red text-white shadow-[0_0_15px_rgba(255,0,0,0.3)]">
-            <Hammer className="h-5 w-5 sm:h-6 sm:w-6" id="logo-icon-hammer" />
-          </div>
-          <div className="hidden sm:block">
-            <div className="flex items-center space-x-1">
-              <span className="font-sans font-black text-xl sm:text-2xl tracking-tighter text-white uppercase leading-none">
-                Run Machine
-              </span>
-            </div>
-            <p className="text-[9px] font-sans font-bold tracking-[0.2em] text-gray-500 uppercase mt-1">
-              Cricket
-            </p>
-          </div>
+          <img 
+            src="/logo.png" 
+            alt="Run Machine Cricket Logo" 
+            className="h-10 sm:h-14 object-contain" 
+            id="official-logo-header"
+          />
         </div>
 
         {/* Desktop Navigation */}

@@ -305,8 +305,12 @@ export default function AdminDashboard({
         <div className="max-w-md w-full space-y-8 bg-white border border-gray-100 p-8 sm:p-10 rounded-3xl shadow-2xl">
           
           <div className="text-center space-y-3">
-            <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-red/10 border border-brand-red/10 text-brand-red shadow-sm">
-              <Lock className="h-6 w-6" />
+            <div className="flex justify-center mb-6">
+              <img 
+                src="/logo.png" 
+                alt="Run Machine Cricket Logo" 
+                className="h-16 object-contain" 
+              />
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-brand-black tracking-tight font-sans uppercase">
               Admin Client Portal
