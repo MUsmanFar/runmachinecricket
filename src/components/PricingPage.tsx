@@ -42,7 +42,8 @@ export default function PricingPage({
   const whatsAppMsg = encodeURIComponent(
     "Hello Run Machine Cricket, I would like to get a quote or enquire about specific bat repairs."
   );
-  const whatsAppLink = `https://wa.me/${whatsAppNumber.replace(/\+/g, "")}?text=${whatsAppMsg}`;
+  const cleanNumber = whatsAppNumber.replace(/\D/g, "");
+  const whatsAppLink = `https://wa.me/${cleanNumber}?text=${whatsAppMsg}`;
 
   return (
     <div className="bg-white py-12 md:py-20 animate-fade-in">

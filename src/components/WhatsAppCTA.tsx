@@ -10,7 +10,8 @@ export default function WhatsAppCTA({ whatsAppNumber }: WhatsAppCTAProps) {
     "Hello Run Machine Cricket,\n\nI need advice on choosing the right repair or refurbishment service for my cricket bat. Could you help me with a recommendation?\n\nThank you."
   );
   
-  const whatsAppLink = `https://wa.me/${whatsAppNumber.replace(/\+/g, "")}?text=${encodedMessage}`;
+  const cleanNumber = whatsAppNumber.replace(/\D/g, "");
+  const whatsAppLink = `https://wa.me/${cleanNumber}?text=${encodedMessage}`;
 
   return (
     <section className="bg-white py-16 sm:py-24 relative overflow-hidden border-b border-gray-100">

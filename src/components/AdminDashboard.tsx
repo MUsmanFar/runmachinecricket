@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Service, RepairRequest, Testimonial, PricingLine, LegalPageData, HomepageContent, RequestStatus } from "../types";
 import { auth, db } from "../firebase";
-import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, User } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from "firebase/auth";
 import { fetchCollection, createDocument, updateDocument, deleteDocument } from "../dbHelper";
 import {
   Lock, KeyRound, Hammer, ClipboardList, Coins, Star, FileText, CheckCircle2,
@@ -25,6 +25,8 @@ export default function AdminDashboard({
   const [isAdmin, setIsAdmin] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
   const [activeTab, setActiveTab2] = useState<"requests" | "services" | "pricing" | "testimonials" | "legal" | "home">("requests");
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
 
   // Collections States
   const [requests, setRequests] = useState<RepairRequest[]>([]);
@@ -96,13 +98,12 @@ export default function AdminDashboard({
     }
   }, [isAdmin, isSandboxMode, reloadSignal]);
 
-  const handleGoogleLogin = async () => {
+  const handleEmailLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
     } catch (e) {
-      alert("Popup block occurred. Switching you to Sandbox Demonstration override.");
-      setIsSandboxMode(true);
+      alert("Invalid credentials or login failed.");
     }
   };
 
@@ -278,7 +279,7 @@ export default function AdminDashboard({
         headline: editingConfig.headline,
         subheadline: editingConfig.subheadline || "",
         ctaText: editingConfig.ctaText || "Appointment Reservation",
-        whatsAppNumber: editingConfig.whatsAppNumber || "+447700900077"
+        whatsAppNumber: editingConfig.whatsAppNumber || "18562873131"
       });
       setEditingConfig(null);
       setReloadSignal(prev => prev + 1);
@@ -320,28 +321,52 @@ export default function AdminDashboard({
             </p>
           </div>
 
-          <div className="space-y-4 pt-4">
+          <form onSubmit={handleEmailLogin} className="space-y-4 pt-4">
+            <div className="space-y-1">
+              <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Admin Email</label>
+              <input 
+                type="email" 
+                required 
+                value={loginEmail} 
+                onChange={(e) => setLoginEmail(e.target.value)} 
+                className="w-full rounded-xl border border-gray-200 bg-brand-gray px-4 py-3 focus:bg-white focus:border-brand-red focus:outline-none transition-all font-sans text-xs"
+                placeholder="admin@runmachinecricket.co.uk"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Password</label>
+              <input 
+                type="password" 
+                required 
+                value={loginPassword} 
+                onChange={(e) => setLoginPassword(e.target.value)} 
+                className="w-full rounded-xl border border-gray-200 bg-brand-gray px-4 py-3 focus:bg-white focus:border-brand-red focus:outline-none transition-all font-sans text-xs"
+                placeholder="••••••••"
+              />
+            </div>
+
             <button
-              onClick={handleGoogleLogin}
-              id="admin-google-login-button"
-              className="w-full flex items-center justify-center space-x-3 rounded-2xl bg-brand-black hover:bg-brand-red text-white py-4 text-xs font-black uppercase tracking-widest transition-all cursor-pointer"
+              type="submit"
+              id="admin-email-login-button"
+              className="w-full flex items-center justify-center space-x-3 rounded-2xl bg-brand-black hover:bg-brand-red text-white py-4 text-xs font-black uppercase tracking-widest transition-all cursor-pointer mt-2"
             >
               <KeyRound className="h-4 w-4 text-brand-red" />
-              <span>Sign In with Google</span>
+              <span>Secure Login</span>
             </button>
 
             <button
+              type="button"
               onClick={handleSandboxOverride}
               id="admin-sandbox-login-button"
               className="w-full flex items-center justify-center space-x-2 rounded-2xl bg-brand-gray hover:bg-white text-gray-600 py-3 text-xs font-black uppercase tracking-widest border border-gray-200 transition-all cursor-pointer"
             >
               <span>Demonstration Bypass</span>
             </button>
-          </div>
+          </form>
 
           <div className="flex items-center space-x-2 text-[10px] text-gray-400 bg-brand-gray rounded-xl p-3">
             <AlertCircle className="h-4 w-4 text-brand-red shrink-0" />
-            <span>Google redirects require domain authorization. Sandbox override simulates all operations securely.</span>
+            <span>Sandbox bypass bypasses authentication locally for demonstration purposes only.</span>
           </div>
 
         </div>

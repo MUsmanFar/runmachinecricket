@@ -1,5 +1,6 @@
 import { Service } from "../types";
 import { ArrowRight, Clock, Tag } from "lucide-react";
+import { motion } from "motion/react";
 
 interface FeaturedServicesProps {
   services: Service[];
@@ -23,7 +24,7 @@ export default function FeaturedServices({
             <p className="text-xs font-mono font-black tracking-widest text-brand-red uppercase">
               WORKSHOP MASTERPIECES
             </p>
-            <h2 className="text-3xl sm:text-5xl font-sans font-black tracking-tight text-brand-black uppercase">
+            <h2 className="text-3xl sm:text-5xl font-display font-black tracking-tight text-brand-black uppercase">
               Specialized Repair & Restoration Services
             </h2>
             <p className="text-sm sm:text-base text-gray-500 font-sans leading-relaxed">
@@ -42,18 +43,22 @@ export default function FeaturedServices({
 
         {/* Services Grid (Displaying first 6 services for a highly aesthetic, non-cramped home block) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.slice(0, 6).map((service) => (
-            <div
+          {services.slice(0, 6).map((service, index) => (
+            <motion.div
               key={service.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               id={`service-card-${service.id}`}
-              className="group flex flex-col overflow-hidden bg-brand-black border border-white/5 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] hover:border-brand-red/30"
+              className="group flex flex-col overflow-hidden bg-brand-black border border-white/5 rounded-3xl transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(214,0,28,0.3)] hover:border-brand-red/30"
             >
               {/* Service Hero Image with premium hover Zoom */}
               <div className="relative h-64 overflow-hidden bg-brand-black">
                 <img
                   src={
                     service.imageUrl ||
-                    "https://images.unsplash.com/photo-1607734834834-d4d4850ef3fa?auto=format&fit=crop&q=80&w=800"
+                    "/images/bat_full_refurb.png"
                   }
                   alt={service.title}
                   referrerPolicy="no-referrer"
@@ -80,7 +85,7 @@ export default function FeaturedServices({
                   </div>
                 </div>
 
-                <h3 className="text-xl font-black text-brand-black group-hover:text-brand-red transition-colors duration-300 mb-3 uppercase tracking-tighter leading-none">
+                <h3 className="text-xl font-black text-brand-black group-hover:text-brand-red transition-colors duration-300 mb-3 uppercase tracking-tighter leading-none font-display">
                   {service.title}
                 </h3>
                 
@@ -106,7 +111,7 @@ export default function FeaturedServices({
                 </div>
 
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 

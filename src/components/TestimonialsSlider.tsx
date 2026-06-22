@@ -34,7 +34,7 @@ export default function TestimonialsSlider({ testimonials }: TestimonialsSliderP
           <p className="text-[10px] sm:text-xs font-mono font-black tracking-[0.2em] text-brand-red uppercase">
             CLIENT PROOFS
           </p>
-          <h2 className="text-4xl sm:text-6xl font-sans font-black tracking-tighter text-white uppercase leading-none">
+          <h2 className="text-4xl sm:text-6xl font-display font-black tracking-tighter text-white uppercase leading-none">
             Trusted By <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600">Pros</span>
           </h2>
         </div>
@@ -63,7 +63,7 @@ export default function TestimonialsSlider({ testimonials }: TestimonialsSliderP
               </div>
 
               {/* Review content body */}
-              <blockquote className="text-2xl sm:text-4xl font-sans font-black text-white leading-[1.2] uppercase tracking-tight">
+              <blockquote className="text-2xl sm:text-4xl font-display font-black text-white leading-[1.2] uppercase tracking-tight">
                 "{activeReview.review}"
               </blockquote>
 

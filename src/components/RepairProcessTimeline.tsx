@@ -63,7 +63,7 @@ export default function RepairProcessTimeline() {
           <p className="text-[10px] sm:text-xs font-mono font-black tracking-[0.2em] text-brand-red uppercase">
             HOW WE RESTORE THE POWER
           </p>
-          <h2 className="text-4xl sm:text-6xl font-sans font-black tracking-tighter text-brand-black uppercase leading-none">
+          <h2 className="text-4xl sm:text-6xl font-display font-black tracking-tighter text-brand-black uppercase leading-none">
             The Repair <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600">Journey</span>
           </h2>
           <p className="text-sm sm:text-base text-gray-500 font-sans leading-relaxed max-w-2xl mx-auto font-light">

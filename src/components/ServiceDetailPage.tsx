@@ -21,7 +21,8 @@ export default function ServiceDetailPage({
   const encodedText = encodeURIComponent(
     `Hello Run Machine Cricket,\n\nI would like information regarding the "${service.title}" service.\n\nPlease provide pricing details and confirm the typical turnaround window for my bat model.\n\nThank you.`
   );
-  const whatsAppLink = `https://wa.me/${whatsAppNumber.replace(/\+/g, "")}?text=${encodedText}`;
+  const cleanNumber = whatsAppNumber.replace(/\D/g, "");
+  const whatsAppLink = `https://wa.me/${cleanNumber}?text=${encodedText}`;
 
   return (
     <div className="bg-white pb-12 md:pb-20 animate-fade-in">

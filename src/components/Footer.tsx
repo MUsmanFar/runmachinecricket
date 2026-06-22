@@ -78,7 +78,7 @@ export default function Footer({ onNavigate, onNavigateLegal }: FooterProps) {
             <div className="space-y-4 text-xs font-sans font-bold tracking-[0.1em] uppercase text-gray-500">
               <div className="flex items-center space-x-3 text-white">
                 <Phone className="h-4 w-4 text-brand-red" />
-                <span>+44 7700 900077</span>
+                <span>+1 (856) 287-3131</span>
               </div>
               <div className="flex items-center space-x-3 text-white">
                 <Mail className="h-4 w-4 text-brand-red" />
@@ -88,7 +88,7 @@ export default function Footer({ onNavigate, onNavigateLegal }: FooterProps) {
 
             <div className="mt-8">
               <a
-                href="https://wa.me/447700900077"
+                href="https://wa.me/18562873131"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center space-x-2 bg-brand-red px-6 py-4 text-[10px] text-white font-sans font-black tracking-[0.2em] uppercase hover:bg-white hover:text-brand-black transition-colors duration-300 shadow-xl shadow-brand-red/20"

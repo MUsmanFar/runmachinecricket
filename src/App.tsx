@@ -177,7 +177,7 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const activeWhatsAppNumber = homepageConfig.whatsAppNumber || "+447700900077";
+  const activeWhatsAppNumber = homepageConfig.whatsAppNumber || "18562873131";
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-brand-black selection:bg-brand-red/10 selection:text-brand-red antialiased">
@@ -271,7 +271,7 @@ export default function App() {
                         <p className="text-xs font-mono font-black tracking-widest text-brand-red uppercase">
                           OUR BESPOKE WORKSHOP SELECTION
                         </p>
-                        <h1 className="text-3xl sm:text-5xl font-sans font-black tracking-tight text-brand-black uppercase">
+                        <h1 className="text-3xl sm:text-5xl font-display font-black tracking-tight text-brand-black uppercase">
                           Bespoke Bat Repair & Refurbishments
                         </h1>
                         <p className="text-sm sm:text-base text-gray-500 font-sans">
@@ -280,18 +280,22 @@ export default function App() {
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {services.map((service) => (
-                          <div
+                        {services.map((service, index) => (
+                          <motion.div
                             key={service.id}
-                            className="bg-white border border-gray-100 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            className="bg-white border border-gray-100 rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-brand-red/5 transition-all duration-300 flex flex-col justify-between group"
                           >
                             <div className="relative h-48 overflow-hidden bg-brand-gray">
-                              <img src={service.imageUrl} alt={service.title} referrerPolicy="no-referrer" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                              <img src={service.imageUrl} alt={service.title} referrerPolicy="no-referrer" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                               <span className="absolute top-4 right-4 bg-brand-black/90 text-white font-mono text-[10px] uppercase font-black py-1.5 px-3 rounded-xl border border-white/10">FROM £{service.startingPrice}</span>
                             </div>
                             <div className="p-6 sm:p-8 flex-grow flex flex-col justify-between">
                               <div className="space-y-3">
-                                <h3 className="text-lg font-black text-brand-black group-hover:text-brand-red transition-colors font-sans uppercase tracking-tight">{service.title}</h3>
+                                <h3 className="text-lg font-black text-brand-black group-hover:text-brand-red transition-colors font-display uppercase tracking-tight">{service.title}</h3>
                                 <p className="text-xs text-brand-red font-black uppercase font-mono tracking-wider">Turnaround: {service.duration || "3 Days"}</p>
                                 <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-sans line-clamp-3">{service.description}</p>
                               </div>
@@ -300,7 +304,7 @@ export default function App() {
                                 <button onClick={() => handleBookService(service)} className="flex-1 py-2.5 bg-brand-red text-white text-xs font-black rounded-xl shadow-sm hover:bg-brand-black transition cursor-pointer uppercase tracking-widest">Book Spot</button>
                               </div>
                             </div>
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
                     </div>
@@ -351,7 +355,7 @@ export default function App() {
                         <CheckCircle className="h-10 w-10" />
                       </div>
 
-                      <h1 className="text-3xl sm:text-5xl font-sans font-black tracking-tight text-brand-black uppercase">
+                      <h1 className="text-3xl sm:text-5xl font-display font-black tracking-tight text-brand-black uppercase">
                         Workshop Slot Secured!
                       </h1>
 
@@ -523,7 +527,7 @@ function WorkshopFAQSection() {
         
         <div className="text-center mb-16 space-y-4">
           <p className="text-xs font-mono font-black tracking-widest text-brand-red uppercase">KNOWLEDGE BASE</p>
-          <h2 className="text-3xl sm:text-5xl font-sans font-black tracking-tight text-brand-black uppercase">FREQUENT REPAIR QUERY DIRECTS</h2>
+          <h2 className="text-3xl sm:text-5xl font-display font-black tracking-tight text-brand-black uppercase">FREQUENT REPAIR QUERY DIRECTS</h2>
           <p className="text-sm text-gray-500 max-w-2xl mx-auto leading-relaxed">
             Understand English willow physics, adhesive characteristics, and custom seasonal prep.
           </p>
@@ -582,7 +586,7 @@ function WorkshopPricingOverview({ pricingData, onBookRepair }: WorkshopPricingO
         
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <p className="text-xs font-mono font-black tracking-widest text-brand-red uppercase">PRICING TRANSPARENCY</p>
-          <h2 className="text-3xl sm:text-5xl font-sans font-black tracking-tight text-brand-black uppercase">WORKSHOP SERVICE INDEX</h2>
+          <h2 className="text-3xl sm:text-5xl font-display font-black tracking-tight text-brand-black uppercase">WORKSHOP SERVICE INDEX</h2>
           <p className="text-sm text-gray-500">
             Every service is priced transparently. We quote bespoke repairs upfront before any blade machining begins.
           </p>
@@ -645,7 +649,7 @@ function HomeContactSection({ whatsAppNumber }: { whatsAppNumber: string }) {
           <div className="lg:col-span-5 space-y-8">
             <div className="space-y-2">
               <p className="text-xs font-mono font-black tracking-widest text-brand-red uppercase">WORKSHOP ACCURACIES</p>
-              <h2 className="text-3xl sm:text-4xl font-sans font-black tracking-tight text-brand-black uppercase">CONTACT OUR LONDON LAB</h2>
+              <h2 className="text-3xl sm:text-4xl font-display font-black tracking-tight text-brand-black uppercase">CONTACT OUR LONDON LAB</h2>
               <p className="text-sm text-gray-500 font-sans leading-relaxed">
                 Send your timber coordinates or schedule a direct visit to watch our automatic pressing rollers in real-time.
               </p>
@@ -704,7 +708,7 @@ function HomeContactSection({ whatsAppNumber }: { whatsAppNumber: string }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="font-bold text-gray-600 uppercase tracking-wider">WhatsApp Number</label>
-                    <input required type="text" className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" placeholder="+44 7700 900077" />
+                    <input required type="text" className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" placeholder="+1 (856) 287-3131" />
                   </div>
                   <div className="space-y-1">
                     <label className="font-bold text-gray-600 uppercase tracking-wider">Bat Brand & Model</label>

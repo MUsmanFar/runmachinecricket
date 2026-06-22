@@ -9,7 +9,8 @@ export default function WhatsAppFloatingCTA({ whatsAppNumber }: WhatsAppFloating
   const whatsAppMsg = encodeURIComponent(
     "Hello Run Machine Cricket, I'm reaching out from your website and would like to ask a question."
   );
-  const whatsAppLink = `https://wa.me/${whatsAppNumber.replace(/\+/g, "")}?text=${whatsAppMsg}`;
+  const cleanNumber = whatsAppNumber.replace(/\D/g, "");
+  const whatsAppLink = `https://wa.me/${cleanNumber}?text=${whatsAppMsg}`;
 
   return (
     <motion.a

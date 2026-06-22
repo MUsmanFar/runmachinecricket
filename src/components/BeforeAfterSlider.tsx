@@ -33,7 +33,7 @@ export default function BeforeAfterSlider() {
           <p className="text-[10px] sm:text-xs font-mono font-black tracking-[0.2em] text-brand-red uppercase">
             CRAFTSMANSHIP REVEALED
           </p>
-          <h2 className="text-4xl sm:text-6xl font-sans font-black tracking-tighter text-white uppercase leading-none">
+          <h2 className="text-4xl sm:text-6xl font-display font-black tracking-tighter text-white uppercase leading-none">
             Night & Day <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600">Transformation</span>
           </h2>
           <p className="text-sm sm:text-base text-gray-400 font-sans leading-relaxed max-w-2xl mx-auto font-light">
@@ -51,7 +51,7 @@ export default function BeforeAfterSlider() {
           >
             {/* After Image (Background) */}
             <img 
-              src="https://images.unsplash.com/photo-1593341646782-e0b495cff86d?auto=format&fit=crop&q=80&w=2400" 
+              src="/images/bat_full_refurb.png" 
               alt="Bat After Repair" 
               className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               loading="lazy"
@@ -62,7 +62,7 @@ export default function BeforeAfterSlider() {
 
             {/* Before Image (Foreground, Clipped via clip-path) */}
             <img 
-              src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=2400" 
+              src="/images/bat_edge_repair.png" 
               alt="Bat Before Repair" 
               className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10"
               style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
@@ -77,10 +77,10 @@ export default function BeforeAfterSlider() {
 
             {/* Slider Handle */}
             <div 
-              className="absolute top-0 bottom-0 w-0.5 bg-brand-red shadow-[0_0_15px_rgba(255,0,0,0.8)] flex items-center justify-center pointer-events-none z-30"
-              style={{ left: `calc(${sliderPosition}% - 1px)` }}
+              className="absolute top-0 bottom-0 w-1 bg-brand-red shadow-[0_0_15px_rgba(255,0,0,0.8)] flex items-center justify-center pointer-events-none z-30"
+              style={{ left: `calc(${sliderPosition}% - 2px)` }}
             >
-              <div className="h-12 w-12 bg-brand-red text-white flex items-center justify-center shadow-[0_0_20px_rgba(255,0,0,0.5)] transition-transform group-hover:scale-110">
+              <div className="h-14 w-10 bg-brand-red border-2 border-white text-white flex items-center justify-center shadow-[0_0_20px_rgba(255,0,0,0.5)] transition-transform rounded-md">
                 <ArrowLeftRight className="h-5 w-5" />
               </div>
             </div>

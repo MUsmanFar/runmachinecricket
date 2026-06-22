@@ -22,16 +22,17 @@ export default function HeroSection({
   const encodedMessage = encodeURIComponent(
     "Hello Run Machine Cricket,\n\nI visited your website and would like to learn more about your premium bat repair and restoration services.\n\nThank you."
   );
-  const whatsAppLink = `https://wa.me/${whatsAppNumber.replace(/\+/g, "")}?text=${encodedMessage}`;
+  const cleanNumber = whatsAppNumber.replace(/\D/g, "");
+  const whatsAppLink = `https://wa.me/${cleanNumber}?text=${encodedMessage}`;
 
   return (
     <section className="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden bg-brand-black">
       
       {/* Massive Immersive Background */}
       <img
-        src="https://images.unsplash.com/photo-1607734834834-d4d4850ef3fa?auto=format&fit=crop&q=80&w=2400"
-        alt="Premium Cricket Bat"
-        className="absolute inset-0 w-full h-full object-cover opacity-60 object-center scale-105 animate-[pulse_20s_ease-in-out_infinite_alternate]"
+        src="/images/workshop_bench.png"
+        alt="Premium Cricket Bat Workshop"
+        className="absolute inset-0 w-full h-full object-cover opacity-50 object-center scale-105 animate-[pulse_20s_ease-in-out_infinite_alternate]"
         loading="eager"
         fetchPriority="high"
       />
@@ -58,9 +59,9 @@ export default function HeroSection({
             repeat: Infinity 
           }}
         >
-          {/* Using a placeholder bat image for the showcase, easily swappable with a transparent PNG */}
+          {/* Using the generated premium bat image for the showcase */}
           <img 
-            src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=800"
+            src="/images/hero_floating_bat.png"
             alt="Floating Cricket Bat Showcase"
             className="w-full h-full object-cover object-center rounded-full mask-image-gradient"
             style={{ maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))' }}
@@ -88,7 +89,7 @@ export default function HeroSection({
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-            className="text-6xl sm:text-7xl lg:text-8xl font-sans font-black tracking-tighter text-white leading-[0.85] uppercase"
+            className="text-6xl sm:text-7xl lg:text-8xl font-display font-black tracking-tighter text-white leading-[0.85] uppercase"
           >
             Revive <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">

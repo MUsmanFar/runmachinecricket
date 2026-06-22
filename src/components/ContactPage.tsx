@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Mail, Phone, MapPin, Clock, MessageSquare, Send, CheckCircle2 } from "lucide-react";
+import { createDocument } from "../dbHelper";
 
 interface ContactPageProps {
   whatsAppNumber: string;
@@ -16,19 +17,48 @@ export default function ContactPage({ whatsAppNumber }: ContactPageProps) {
 
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSending, setIsSending] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
       alert("Please enter all required fields.");
       return;
     }
-    setSubmitted(true);
+    
+    setIsSending(true);
+    const inquiryId = "INQ-" + Math.floor(100000 + Math.random() * 900000);
+    
+    try {
+      // Save to Firestore
+      await createDocument("contact_inquiries", inquiryId, {
+        ...formData,
+        id: inquiryId,
+        createdAt: new Date().toISOString()
+      });
+
+      // Trigger Email
+      await fetch("/api/sendEmail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "contact_inquiry", payload: formData })
+      });
+      
+      setSubmitted(true);
+    } catch (err) {
+      console.warn("Submission error", err);
+      // Fallback
+      setSubmitted(true);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const encodedMsg = encodeURIComponent(
     "Hello Run Machine Cricket, I would like to make an inquiry regarding your workshop availability."
   );
-  const whatsAppLink = `https://wa.me/${whatsAppNumber.replace(/\+/g, "")}?text=${encodedMsg}`;
+  const cleanNumber = whatsAppNumber.replace(/\D/g, "");
+  const whatsAppLink = `https://wa.me/${cleanNumber}?text=${encodedMsg}`;
 
   return (
     <div className="bg-white py-12 md:py-20 animate-fade-in">
@@ -84,7 +114,7 @@ export default function ContactPage({ whatsAppNumber }: ContactPageProps) {
                   <Phone className="h-5 w-5 text-brand-red shrink-0 mt-0.5" />
                   <div>
                     <p className="font-extrabold text-white uppercase tracking-tight">Direct Phone Line</p>
-                    <p className="text-gray-400 mt-1">+44 7700 900077</p>
+                    <p className="text-gray-400 mt-1">+1 (856) 287-3131</p>
                   </div>
                 </div>
 
@@ -219,7 +249,7 @@ export default function ContactPage({ whatsAppNumber }: ContactPageProps) {
                       <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Contact Phone Line</label>
                       <input
                         type="tel"
-                        placeholder="e.g. +44 7700 900077"
+                        placeholder="e.g. +1 (856) 287-3131"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="w-full rounded-xl border border-gray-200 bg-brand-gray px-4 py-3 text-xs sm:text-sm text-brand-black focus:bg-white focus:border-brand-red focus:outline-none transition-all font-sans"
@@ -258,11 +288,12 @@ export default function ContactPage({ whatsAppNumber }: ContactPageProps) {
 
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center space-x-2 py-4 px-6 bg-brand-black hover:bg-brand-red text-white rounded-xl text-xs font-black tracking-widest uppercase transition-all cursor-pointer"
+                    disabled={isSending}
+                    className="w-full flex items-center justify-center space-x-2 py-4 px-6 bg-brand-black hover:bg-brand-red text-white rounded-xl text-xs font-black tracking-widest uppercase transition-all cursor-pointer disabled:opacity-70"
                     id="contact-form-submit-button"
                   >
                     <Send className="h-4 w-4" />
-                    <span>Send Message to Workshop</span>
+                    <span>{isSending ? "SENDING..." : "Send Message to Workshop"}</span>
                   </button>
 
                   <p className="text-[10px] text-gray-400 text-center font-sans tracking-wide">

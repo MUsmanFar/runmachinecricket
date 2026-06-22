@@ -31,7 +31,7 @@ export default function WorkshopGallery({ items }: WorkshopGalleryProps) {
             <span>VISUAL STORYTELLING</span>
             <span>●</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-brand-black uppercase font-sans">
+          <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-brand-black uppercase font-display">
             THE WORKSHOP GALLERY
           </h2>
           <p className="text-sm sm:text-base text-gray-500 max-w-2xl mx-auto leading-relaxed">
@@ -93,7 +93,7 @@ export default function WorkshopGallery({ items }: WorkshopGalleryProps) {
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6 sm:p-8">
                     <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 space-y-3">
                       <div className="w-8 h-1 bg-brand-red" />
-                      <p className="text-white text-xl font-black tracking-tighter uppercase leading-none">
+                      <p className="text-white text-xl font-black tracking-tighter uppercase leading-none font-display">
                         {item.title}
                       </p>
                       {item.description && (
@@ -150,7 +150,7 @@ export default function WorkshopGallery({ items }: WorkshopGalleryProps) {
                 className="w-full h-auto max-h-[80vh] object-contain rounded-2xl shadow-2xl"
               />
               <div className="mt-6 text-center">
-                <h3 className="text-2xl font-black text-white uppercase tracking-tight">{lightboxItem.title}</h3>
+                <h3 className="text-2xl font-black text-white uppercase tracking-tight font-display">{lightboxItem.title}</h3>
                 {lightboxItem.description && (
                   <p className="mt-2 text-gray-400 text-sm max-w-2xl mx-auto">{lightboxItem.description}</p>
                 )}

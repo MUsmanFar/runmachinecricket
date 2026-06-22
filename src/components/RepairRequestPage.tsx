@@ -121,6 +121,18 @@ export default function RepairRequestPage({
 
     try {
       await createDocument("repair_requests", bookingRef, requestPayload);
+      
+      // Trigger Email Notification
+      try {
+        await fetch("/api/sendEmail", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ type: "repair_request", payload: requestPayload })
+        });
+      } catch (emailErr) {
+        console.warn("Email notification failed to send", emailErr);
+      }
+
       setLoading(false);
       onSuccess(bookingRef);
     } catch (error) {
