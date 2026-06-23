@@ -67,6 +67,9 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
 // --- UTILITY DATA HELPERS ---
 
 export async function fetchCollection<T>(collectionName: string): Promise<T[]> {
+  if (!import.meta.env.VITE_FIREBASE_PROJECT_ID) {
+    throw new Error("Firebase is not configured. Falling back to local data.");
+  }
   try {
     const qSnapshot = await getDocs(collection(db, collectionName));
     const items: T[] = [];
@@ -108,6 +111,9 @@ export async function deleteDocument(collectionName: string, docId: string): Pro
 import { defaultGallery } from "./defaultData";
 
 export async function seedDatabaseIfNeeded(): Promise<void> {
+  if (!import.meta.env.VITE_FIREBASE_PROJECT_ID) {
+    throw new Error("Firebase is not configured. Skipping seeding.");
+  }
   try {
     // Check services
     const servicesSnap = await getDocs(collection(db, "services"));
@@ -163,5 +169,6 @@ export async function seedDatabaseIfNeeded(): Promise<void> {
     }
   } catch (error) {
     console.error("Optional auto-seeding encountered Firestore security locks. Relying on local memory fallback state.", error);
+    throw error;
   }
 }
