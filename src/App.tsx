@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Service, Testimonial, PricingLine, LegalPageData, HomepageContent, WorkshopGalleryItem } from "./types";
+import React, { useState, useEffect, Suspense, lazy } from "react";
+import { Service, Testimonial, PricingLine, LegalPageData, HomepageContent, WorkshopGalleryItem, BusinessSettings } from "./types";
 import { fetchCollection, seedDatabaseIfNeeded } from "./dbHelper";
 import {
   defaultServices,
@@ -8,6 +8,7 @@ import {
   defaultLegalPages,
   defaultHomepageContent,
   defaultGallery,
+  defaultSettings,
 } from "./defaultData";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -17,15 +18,17 @@ import FeaturedServices from "./components/FeaturedServices";
 import TestimonialsSlider from "./components/TestimonialsSlider";
 import WhatsAppCTA from "./components/WhatsAppCTA";
 import WorkshopGallery from "./components/WorkshopGallery";
-import AboutUs from "./components/AboutUs";
-import ContactPage from "./components/ContactPage";
-import PricingPage from "./components/PricingPage";
-import RepairRequestPage from "./components/RepairRequestPage";
-import ServiceDetailPage from "./components/ServiceDetailPage";
 import LegalPageLayout from "./components/LegalPageLayout";
-import AdminDashboard from "./components/AdminDashboard";
 import BeforeAfterSlider from "./components/BeforeAfterSlider";
 import WhatsAppFloatingCTA from "./components/WhatsAppFloatingCTA";
+
+// Lazy Loaded Routes for Code Splitting (Performance)
+const AboutUs = lazy(() => import("./components/AboutUs"));
+const ContactPage = lazy(() => import("./components/ContactPage"));
+const PricingPage = lazy(() => import("./components/PricingPage"));
+const RepairRequestPage = lazy(() => import("./components/RepairRequestPage"));
+const ServiceDetailPage = lazy(() => import("./components/ServiceDetailPage"));
+const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
 
 import { motion, AnimatePresence } from "motion/react";
 import { Hammer, CircleHelp, ShieldCheck, Mail, MessageSquare, ClipboardCheck, ArrowRight, CheckCircle, RefreshCw } from "lucide-react";
@@ -45,6 +48,7 @@ export default function App() {
   const [legalPages, setLegalPages] = useState<LegalPageData[]>(defaultLegalPages);
   const [homepageConfig, setHomepageConfig] = useState<HomepageContent>(defaultHomepageContent);
   const [gallery, setGallery] = useState<WorkshopGalleryItem[]>(defaultGallery);
+  const [settings, setSettings] = useState<BusinessSettings>(defaultSettings);
 
   // Selected details
   const [selectedService, setSelectedService] = useState<Service | null>(null);
@@ -70,12 +74,17 @@ export default function App() {
         const legals = await fetchCollection<LegalPageData>("legal_pages");
         const homeC = await fetchCollection<HomepageContent>("homepage");
         const gall = await fetchCollection<WorkshopGalleryItem>("gallery");
+        const sets = await fetchCollection<BusinessSettings>("settings");
 
         if (servs.length > 0) setServices(servs);
         if (tests.length > 0) setTestimonials(tests);
         if (prices.length > 0) setPricingData(prices);
         if (legals.length > 0) setLegalPages(legals);
         if (gall.length > 0) setGallery(gall);
+        if (sets.length > 0) {
+          const matchedSet = sets.find((s) => s.id === "general");
+          if (matchedSet) setSettings(matchedSet);
+        }
         if (homeC.length > 0) {
           const matched = homeC.find((h) => h.id === "hero");
           if (matched) setHomepageConfig(matched);
@@ -206,7 +215,16 @@ export default function App() {
                 </div>
               </div>
             ) : (
-              <>
+              <Suspense fallback={
+                <div className="flex min-h-[60vh] items-center justify-center">
+                  <div className="flex flex-col items-center space-y-4">
+                    <RefreshCw className="h-10 w-10 text-brand-red animate-spin" />
+                    <p className="text-xs font-mono font-bold tracking-widest text-gray-500 uppercase">
+                      LOADING VIEW...
+                    </p>
+                  </div>
+                </div>
+              }>
                 {/* 1. Home Base View */}
                 {currentView === "home" && (
                   <div className="space-y-0 text-brand-black bg-white">
@@ -437,7 +455,7 @@ export default function App() {
                     onPageClose={() => handleNavigate("home")}
                   />
                 )}
-              </>
+              </Suspense>
             )}
           </motion.div>
         </AnimatePresence>
@@ -449,7 +467,7 @@ export default function App() {
       )}
 
       {/* Corporate Platform Footer */}
-      <Footer onNavigate={handleNavigate} onNavigateLegal={handleNavigateLegal} />
+      <Footer onNavigate={handleNavigate} onNavigateLegal={handleNavigateLegal} settings={settings} />
     </div>
   );
 }

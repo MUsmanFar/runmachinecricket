@@ -9,6 +9,12 @@ export default async function handler(req, res) {
   }
 
   try {
+    const apiKey = process.env.VITE_RESEND_API_KEY || process.env.RESEND_API_KEY;
+    if (!apiKey || apiKey === 're_your_api_key_here') {
+      console.warn("Resend API key missing or dummy. Email delivery skipped gracefully.");
+      return res.status(200).json({ success: true, warning: 'Email skipped (missing key)' });
+    }
+
     const data = req.body;
     const { type, payload } = data;
 
@@ -42,13 +48,31 @@ export default async function handler(req, res) {
         <p><strong>Message:</strong></p>
         <p>${payload.message}</p>
       `;
+    } else if (type === 'status_update') {
+      subject = `Status Update on your Repair: ${payload.status}`;
+      htmlContent = `
+        <h2>Your Repair Status Has Been Updated</h2>
+        <p>Hi ${payload.fullName},</p>
+        <p>The status of your repair booking (Ref: ${payload.id}) has been updated to: <strong>${payload.status}</strong></p>
+        <p><strong>Service:</strong> ${payload.serviceName}</p>
+        <p><strong>Bat Brand:</strong> ${payload.batBrand}</p>
+        <br/>
+        <p>Thank you for choosing Run Machine Cricket!</p>
+      `;
     } else {
       return res.status(400).json({ error: 'Invalid notification type' });
     }
 
+    let toAddresses = ['admin@runmachinecricket.co.uk'];
+    if (type === 'repair_request' || type === 'status_update') {
+      if (payload.email) {
+        toAddresses.push(payload.email);
+      }
+    }
+
     const resendData = await resend.emails.send({
       from: 'Run Machine Cricket <onboarding@resend.dev>', // Replace with verified domain in production
-      to: ['admin@runmachinecricket.co.uk'], // Replace with business email
+      to: toAddresses,
       subject: subject,
       html: htmlContent,
     });

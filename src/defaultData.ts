@@ -1,4 +1,16 @@
-import { Service, Testimonial, PricingLine, LegalPageData, HomepageContent } from "./types";
+import { Service, Testimonial, PricingLine, LegalPageData, HomepageContent, BusinessSettings } from "./types";
+
+export const defaultSettings: BusinessSettings = {
+  id: "general",
+  businessName: "Run Machine Cricket",
+  phone: "+44 7712 345678",
+  whatsApp: "18562873131",
+  email: "info@runmachinecricket.co.uk",
+  notificationEmail: "admin@runmachinecricket.co.uk",
+  address: "Suite 12, Wembley Commercial Center, Wembley, London, HA9 0TH",
+  facebookUrl: "https://facebook.com/runmachinecricket",
+  instagramUrl: "https://instagram.com/runmachinecricket"
+};
 
 export const defaultServices: Service[] = [
   {

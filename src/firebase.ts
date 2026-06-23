@@ -14,8 +14,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Initialize Services
+import { getStorage } from "firebase/storage";
 export const db = getFirestore(app, import.meta.env.VITE_FIREBASE_DATABASE_ID);
 export const auth = getAuth(app);
+export const storage = getStorage(app);
 
 // Connectivity validator helper
 async function testConnection() {

@@ -1,11 +1,14 @@
 import { Hammer, MessageSquare, ShieldCheck, Mail, MapPin, Phone } from "lucide-react";
 
+import { BusinessSettings } from "../types";
+
 interface FooterProps {
   onNavigate: (view: string) => void;
   onNavigateLegal: (pageId: string) => void;
+  settings?: BusinessSettings;
 }
 
-export default function Footer({ onNavigate, onNavigateLegal }: FooterProps) {
+export default function Footer({ onNavigate, onNavigateLegal, settings }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   const quickLinks = [
@@ -41,7 +44,7 @@ export default function Footer({ onNavigate, onNavigateLegal }: FooterProps) {
             </div>
             
             <p className="text-sm text-gray-500 leading-relaxed font-sans font-light">
-              Run Machine Cricket represents ultimate elite craftsmanship. We specialize in precision repair, structural reinforcement, and comprehensive English willow restorations.
+              {settings?.businessName || "Run Machine Cricket"} represents ultimate elite craftsmanship. We specialize in precision repair, structural reinforcement, and comprehensive English willow restorations.
             </p>
 
             <div className="flex items-center space-x-2 text-white text-[10px] font-sans font-black tracking-[0.2em] uppercase bg-white/5 px-4 py-3 border border-white/10 w-fit">
@@ -78,17 +81,17 @@ export default function Footer({ onNavigate, onNavigateLegal }: FooterProps) {
             <div className="space-y-4 text-xs font-sans font-bold tracking-[0.1em] uppercase text-gray-500">
               <div className="flex items-center space-x-3 text-white">
                 <Phone className="h-4 w-4 text-brand-red" />
-                <span>+1 (856) 287-3131</span>
+                <span>{settings?.phone || "+1 (856) 287-3131"}</span>
               </div>
               <div className="flex items-center space-x-3 text-white">
                 <Mail className="h-4 w-4 text-brand-red" />
-                <span>craft@runmachine.co.uk</span>
+                <span>{settings?.email || "craft@runmachine.co.uk"}</span>
               </div>
             </div>
 
             <div className="mt-8">
               <a
-                href="https://wa.me/18562873131"
+                href={`https://wa.me/${(settings?.whatsApp || "18562873131").replace(/\+/g, "")}`}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center space-x-2 bg-brand-red px-6 py-4 text-[10px] text-white font-sans font-black tracking-[0.2em] uppercase hover:bg-white hover:text-brand-black transition-colors duration-300 shadow-xl shadow-brand-red/20"
@@ -104,7 +107,7 @@ export default function Footer({ onNavigate, onNavigateLegal }: FooterProps) {
         {/* BOTTOM: Copyright & Legal */}
         <div className="mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-[10px] font-sans font-bold tracking-[0.2em] uppercase text-gray-500">
-            Run Machine Cricket © {currentYear}
+            {settings?.businessName || "Run Machine Cricket"} © {currentYear}
           </p>
           
           <ul className="flex flex-wrap justify-center gap-6 text-[9px] font-sans font-bold tracking-[0.2em] uppercase text-gray-600">

@@ -5,8 +5,11 @@ import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from "f
 import { fetchCollection, createDocument, updateDocument, deleteDocument } from "../dbHelper";
 import {
   Lock, KeyRound, Hammer, ClipboardList, Coins, Star, FileText, CheckCircle2,
-  Trash2, Edit3, Plus, X, LogOut, Check, ChevronDown, RefreshCw, AlertCircle
+  Trash2, Edit3, Plus, X, LogOut, Check, ChevronDown, RefreshCw, AlertCircle, Upload, Mail, Settings
 } from "lucide-react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { uploadFileToStorage } from "../storageHelper";
 
 interface AdminDashboardProps {
   onServiceChange: () => void;
@@ -24,7 +27,7 @@ export default function AdminDashboard({
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
-  const [activeTab, setActiveTab2] = useState<"requests" | "services" | "pricing" | "testimonials" | "legal" | "home">("requests");
+  const [activeTab, setActiveTab2] = useState<"requests" | "services" | "pricing" | "testimonials" | "legal" | "home" | "settings">("requests");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
@@ -35,6 +38,7 @@ export default function AdminDashboard({
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [legalPages, setLegalPages] = useState<LegalPageData[]>([]);
   const [homepageConfig, setHomepageConfig] = useState<HomepageContent | null>(null);
+  const [settings, setSettings] = useState<any>(null);
 
   // States refresh trigger
   const [reloadSignal, setReloadSignal] = useState(0);
@@ -46,6 +50,8 @@ export default function AdminDashboard({
   const [editingTestimonial, setEditingTestimonial] = useState<Partial<Testimonial> | null>(null);
   const [editingLegal, setEditingLegal] = useState<Partial<LegalPageData> | null>(null);
   const [editingConfig, setEditingConfig] = useState<Partial<HomepageContent> | null>(null);
+  const [editingSettings, setEditingSettings] = useState<any>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   // Override / Sandbox Mode
   const [isSandboxMode, setIsSandboxMode] = useState(false);
@@ -81,6 +87,7 @@ export default function AdminDashboard({
           const tests = await fetchCollection<Testimonial>("testimonials");
           const legals = await fetchCollection<LegalPageData>("legal_pages");
           const homeC = await fetchCollection<HomepageContent>("homepage");
+          const sets = await fetchCollection<any>("settings");
 
           setRequests(reqs.sort((a,b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
           setServices(servs);
@@ -89,6 +96,9 @@ export default function AdminDashboard({
           setLegalPages(legals);
           if (homeC.length > 0) {
             setHomepageConfig(homeC.find(h => h.id === "hero") || homeC[0]);
+          }
+          if (sets.length > 0) {
+            setSettings(sets.find(s => s.id === "general") || sets[0]);
           }
         } catch (e) {
           console.warn("Could not retrieve some cloud DB records.");
@@ -124,10 +134,36 @@ export default function AdminDashboard({
 
   // --- ACTIONS HANDLERS ---
 
+  const handleFileUpload = async (file: File, folder: string, callback: (url: string) => void) => {
+    try {
+      setUploadingImage(true);
+      const url = await uploadFileToStorage(file, folder);
+      callback(url);
+    } catch (error) {
+      alert("Failed to upload image. " + (error as Error).message);
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   const handleUpdateStatus = async (requestId: string, newStatus: RequestStatus) => {
     try {
       await updateDocument("repair_requests", requestId, { status: newStatus });
       setReloadSignal(prev => prev + 1);
+      
+      const req = requests.find(r => r.id === requestId);
+      if (req && (newStatus === "Quote Sent" || newStatus === "Completed" || newStatus === "Delivered")) {
+        // Trigger status update email
+        fetch('/api/sendEmail', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'status_update',
+            payload: { ...req, status: newStatus }
+          })
+        }).catch(err => console.error("Email API Error:", err));
+      }
+
       if (selectedRequest && selectedRequest.id === requestId) {
         setSelectedRequest(prev => prev ? { ...prev, status: newStatus } : null);
       }
@@ -188,6 +224,7 @@ export default function AdminDashboard({
       serviceGroup: editingPricing.serviceGroup || "Workshop Classics",
       serviceName: editingPricing.serviceName,
       price: editingPricing.price,
+      description: editingPricing.description || "",
       priceType: editingPricing.priceType || "Fixed"
     };
 
@@ -285,6 +322,31 @@ export default function AdminDashboard({
       setReloadSignal(prev => prev + 1);
     } catch (e) {
       setEditingConfig(null);
+    }
+  };
+
+  const handleSaveSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingSettings?.businessName) return;
+
+    try {
+      await createDocument("settings", "general", {
+        id: "general",
+        businessName: editingSettings.businessName,
+        phone: editingSettings.phone || "",
+        whatsApp: editingSettings.whatsApp || "",
+        email: editingSettings.email || "",
+        notificationEmail: editingSettings.notificationEmail || "",
+        address: editingSettings.address || "",
+        facebookUrl: editingSettings.facebookUrl || "",
+        instagramUrl: editingSettings.instagramUrl || ""
+      });
+      setEditingSettings(null);
+      setReloadSignal(prev => prev + 1);
+      // Need a global refresh for settings changes
+      window.location.reload();
+    } catch (e) {
+      setEditingSettings(null);
     }
   };
 
@@ -425,7 +487,8 @@ export default function AdminDashboard({
             { id: "pricing", label: "Tariff Matrix", icon: <Coins className="h-4 w-4" /> },
             { id: "testimonials", label: "Feedback", icon: <Star className="h-4 w-4" /> },
             { id: "legal", label: "Legal Pages", icon: <FileText className="h-4 w-4" /> },
-            { id: "home", label: "Hero Content", icon: <Edit3 className="h-4 w-4" /> }
+            { id: "home", label: "Hero Content", icon: <Edit3 className="h-4 w-4" /> },
+            { id: "settings", label: "Settings", icon: <Settings className="h-4 w-4" /> }
           ].map((tab) => {
             const isSelected = activeTab === tab.id;
             return (
@@ -712,8 +775,141 @@ export default function AdminDashboard({
                     <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Contact WhatsApp Number</label>
                     <input
                       type="text"
-                      value={editingConfig?.whatsAppNumber !== undefined ? editingConfig.whatsAppNumber : homepageConfig.whatsAppNumber}
+                      value={editingConfig?.whatsAppNumber !== undefined ? editingConfig.whatsAppNumber : homepageConfig?.whatsAppNumber || ""}
                       onChange={(e) => setEditingConfig({ ...editingConfig, whatsAppNumber: e.target.value })}
+                      className="w-full rounded-xl border border-gray-200 bg-brand-gray p-3 focus:bg-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Hero Background Image</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          handleFileUpload(e.target.files[0], "hero", (url) => setEditingConfig({ ...editingConfig, backgroundImageUrl: url }));
+                        }
+                      }}
+                      className="w-full text-[10px]"
+                    />
+                    {uploadingImage && <p className="text-[10px] text-brand-red animate-pulse">Uploading...</p>}
+                    {(editingConfig?.backgroundImageUrl || homepageConfig?.backgroundImageUrl) && (
+                      <img src={editingConfig?.backgroundImageUrl || homepageConfig?.backgroundImageUrl} alt="preview" className="h-24 rounded mt-2 object-cover" />
+                    )}
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={uploadingImage}
+                  className="px-6 py-3.5 bg-brand-black hover:bg-brand-red text-white rounded-xl text-xs font-black uppercase tracking-widest cursor-pointer transition-all mt-4 disabled:opacity-50"
+                >
+                  Save Homepage Layout Config
+                </button>
+              </form>
+            ) : (
+              <p className="text-xs text-gray-400">Loading Homepage configuration...</p>
+            )}
+          </div>
+        )}
+
+        {/* Tab 7: Global Settings */}
+        {activeTab === "settings" && (
+          <div className="bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+            <h3 className="text-sm font-black font-sans text-brand-black uppercase tracking-widest">Global Business Settings</h3>
+            
+            {settings ? (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSaveSettings(e);
+                }}
+                className="space-y-4 font-sans text-xs sm:text-sm"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Business Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={editingSettings?.businessName !== undefined ? editingSettings.businessName : settings.businessName}
+                      onChange={(e) => setEditingSettings({ ...(editingSettings || settings), businessName: e.target.value })}
+                      className="w-full rounded-xl border border-gray-200 bg-brand-gray p-3 focus:bg-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Phone Number</label>
+                    <input
+                      type="text"
+                      required
+                      value={editingSettings?.phone !== undefined ? editingSettings.phone : settings.phone}
+                      onChange={(e) => setEditingSettings({ ...(editingSettings || settings), phone: e.target.value })}
+                      className="w-full rounded-xl border border-gray-200 bg-brand-gray p-3 focus:bg-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">WhatsApp Number (Digits Only)</label>
+                    <input
+                      type="text"
+                      required
+                      value={editingSettings?.whatsApp !== undefined ? editingSettings.whatsApp : settings.whatsApp}
+                      onChange={(e) => setEditingSettings({ ...(editingSettings || settings), whatsApp: e.target.value })}
+                      className="w-full rounded-xl border border-gray-200 bg-brand-gray p-3 focus:bg-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Contact Email</label>
+                    <input
+                      type="email"
+                      required
+                      value={editingSettings?.email !== undefined ? editingSettings.email : settings.email}
+                      onChange={(e) => setEditingSettings({ ...(editingSettings || settings), email: e.target.value })}
+                      className="w-full rounded-xl border border-gray-200 bg-brand-gray p-3 focus:bg-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Admin Notification Email</label>
+                    <input
+                      type="email"
+                      required
+                      value={editingSettings?.notificationEmail !== undefined ? editingSettings.notificationEmail : settings.notificationEmail}
+                      onChange={(e) => setEditingSettings({ ...(editingSettings || settings), notificationEmail: e.target.value })}
+                      className="w-full rounded-xl border border-gray-200 bg-brand-gray p-3 focus:bg-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Physical Address</label>
+                    <input
+                      type="text"
+                      required
+                      value={editingSettings?.address !== undefined ? editingSettings.address : settings.address}
+                      onChange={(e) => setEditingSettings({ ...(editingSettings || settings), address: e.target.value })}
+                      className="w-full rounded-xl border border-gray-200 bg-brand-gray p-3 focus:bg-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Facebook URL</label>
+                    <input
+                      type="text"
+                      value={editingSettings?.facebookUrl !== undefined ? editingSettings.facebookUrl : settings.facebookUrl}
+                      onChange={(e) => setEditingSettings({ ...(editingSettings || settings), facebookUrl: e.target.value })}
+                      className="w-full rounded-xl border border-gray-200 bg-brand-gray p-3 focus:bg-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Instagram URL</label>
+                    <input
+                      type="text"
+                      value={editingSettings?.instagramUrl !== undefined ? editingSettings.instagramUrl : settings.instagramUrl}
+                      onChange={(e) => setEditingSettings({ ...(editingSettings || settings), instagramUrl: e.target.value })}
                       className="w-full rounded-xl border border-gray-200 bg-brand-gray p-3 focus:bg-white focus:border-brand-red focus:outline-none"
                     />
                   </div>
@@ -723,11 +919,11 @@ export default function AdminDashboard({
                   type="submit"
                   className="px-6 py-3.5 bg-brand-black hover:bg-brand-red text-white rounded-xl text-xs font-black uppercase tracking-widest cursor-pointer transition-all mt-4"
                 >
-                  Save Homepage Layout Config
+                  Save Global Settings
                 </button>
               </form>
             ) : (
-              <p className="text-xs text-gray-400">Homepage hero metadata is absent. Refresh page to seed.</p>
+              <p className="text-xs text-gray-400">Loading Global Settings configuration...</p>
             )}
           </div>
         )}
@@ -847,19 +1043,50 @@ export default function AdminDashboard({
               </div>
             </div>
 
-            <div className="space-y-1">
-              <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Service detailed description text</label>
-              <textarea
-                rows={4}
-                required
-                value={editingService.description || ""}
-                onChange={(e) => setEditingService({ ...editingService, description: e.target.value })}
-                className="w-full rounded-xl border p-3 focus:outline-none focus:border-brand-red"
-                placeholder="Break down exactly what is included in this repair..."
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Service detailed description text</label>
+                <textarea
+                  rows={4}
+                  required
+                  value={editingService.description || ""}
+                  onChange={(e) => setEditingService({ ...editingService, description: e.target.value })}
+                  className="w-full rounded-xl border p-3 focus:outline-none focus:border-brand-red"
+                  placeholder="Break down exactly what is included in this repair..."
+                />
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Service Image</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        handleFileUpload(e.target.files[0], "services", (url) => setEditingService({ ...editingService, imageUrl: url }));
+                      }
+                    }}
+                    className="w-full text-[10px]"
+                  />
+                  {uploadingImage && <p className="text-[10px] text-brand-red animate-pulse">Uploading...</p>}
+                  {editingService.imageUrl && <img src={editingService.imageUrl} alt="preview" className="h-16 rounded mt-2 object-cover" />}
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="isActiveToggle"
+                    checked={editingService.isActive !== false}
+                    onChange={(e) => setEditingService({ ...editingService, isActive: e.target.checked })}
+                    className="w-4 h-4 text-brand-red border-gray-300 rounded focus:ring-brand-red"
+                  />
+                  <label htmlFor="isActiveToggle" className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Service Active</label>
+                </div>
+              </div>
             </div>
 
-            <button type="submit" className="w-full py-3 bg-brand-black hover:bg-brand-red text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all mt-4">
+            <button type="submit" disabled={uploadingImage} className="w-full py-3 bg-brand-black hover:bg-brand-red text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all mt-4 disabled:opacity-50">
               Save Service Offering
             </button>
           </form>
@@ -928,6 +1155,17 @@ export default function AdminDashboard({
                 </select>
               </div>
             </div>
+            
+            <div className="space-y-1">
+              <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Service Description</label>
+              <textarea
+                rows={2}
+                value={editingPricing.description || ""}
+                onChange={(e) => setEditingPricing({ ...editingPricing, description: e.target.value })}
+                className="w-full rounded-xl border p-3 focus:outline-none"
+                placeholder="Optional brief description..."
+              />
+            </div>
 
             <button type="submit" className="w-full py-3 bg-brand-black hover:bg-brand-red text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all mt-4">
               Save Price Rate
@@ -993,7 +1231,23 @@ export default function AdminDashboard({
               />
             </div>
 
-            <button type="submit" className="w-full py-3 bg-brand-black hover:bg-brand-red text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all mt-4">
+            <div className="space-y-1">
+              <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Customer Image</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    handleFileUpload(e.target.files[0], "testimonials", (url) => setEditingTestimonial({ ...editingTestimonial, imageUrl: url }));
+                  }
+                }}
+                className="w-full text-[10px]"
+              />
+              {uploadingImage && <p className="text-[10px] text-brand-red animate-pulse">Uploading...</p>}
+              {editingTestimonial.imageUrl && <img src={editingTestimonial.imageUrl} alt="preview" className="h-16 rounded mt-2 object-cover" />}
+            </div>
+
+            <button type="submit" disabled={uploadingImage} className="w-full py-3 bg-brand-black hover:bg-brand-red text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all mt-4 disabled:opacity-50">
               Save Review Item
             </button>
           </form>
@@ -1010,14 +1264,15 @@ export default function AdminDashboard({
             </div>
 
             <div className="space-y-1">
-              <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Legal Policy Description (markdown elements allowed)</label>
-              <textarea
-                required
-                rows={12}
-                value={editingLegal.content || ""}
-                onChange={(e) => setEditingLegal({ ...editingLegal, content: e.target.value })}
-                className="w-full rounded-xl border p-4 text-xs font-mono leading-relaxed focus:outline-none bg-brand-gray"
-              />
+              <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Legal Policy Content (Rich Text)</label>
+              <div className="bg-white text-brand-black">
+                <ReactQuill 
+                  theme="snow" 
+                  value={editingLegal.content || ""} 
+                  onChange={(content) => setEditingLegal({ ...editingLegal, content })}
+                  className="h-64 mb-12"
+                />
+              </div>
             </div>
 
             <button type="submit" className="w-full py-3 bg-brand-black hover:bg-brand-red text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all mt-4">

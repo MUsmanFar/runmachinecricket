@@ -16,6 +16,7 @@ export interface Service {
   imageUrl?: string;
   beforeImageUrl?: string;
   afterImageUrl?: string;
+  isActive?: boolean;
   faqs?: { question: string; answer: string }[];
 }
 
@@ -48,6 +49,7 @@ export interface Testimonial {
   batModel?: string;
   serviceReceived?: string;
   date?: string;
+  imageUrl?: string;
   isFeatured?: boolean;
 }
 
@@ -56,6 +58,7 @@ export interface PricingLine {
   serviceGroup: string; // e.g. "Workshop Classics", "Full Restoration"
   serviceName: string;
   price: string;
+  description?: string;
   priceType: "Fixed" | "Starting From" | "Custom Quote";
 }
 
@@ -72,6 +75,7 @@ export interface HomepageContent {
   subheadline: string;
   ctaText: string;
   whatsAppNumber: string;
+  backgroundImageUrl?: string;
 }
 
 export interface WorkshopGalleryItem {
@@ -81,6 +85,22 @@ export interface WorkshopGalleryItem {
   category: "Repair" | "Workshop" | "Before/After" | string;
   description?: string;
   createdAt?: string;
+}
+
+// ==========================================
+// SETTINGS
+// ==========================================
+
+export interface BusinessSettings {
+  id: string;
+  businessName: string;
+  phone: string;
+  whatsApp: string;
+  email: string;
+  notificationEmail: string;
+  address: string;
+  facebookUrl?: string;
+  instagramUrl?: string;
 }
 
 // ==========================================

@@ -8,21 +8,8 @@ interface LegalPageLayoutProps {
 
 export default function LegalPageLayout({ page, onBack }: LegalPageLayoutProps) {
   
-  // A clean helper to break paragraphs into beautiful spacing
-  const formattedContent = page.content.split("\n\n").map((para, index) => {
-    if (para.startsWith("###")) {
-      return (
-        <h3 key={index} className="text-sm sm:text-base font-black text-brand-black uppercase tracking-widest font-sans mt-8 mb-4 border-b border-gray-100 pb-2">
-          {para.replace("###", "").trim()}
-        </h3>
-      );
-    }
-    return (
-      <p key={index} className="text-xs sm:text-sm text-gray-500 leading-relaxed font-sans mb-5">
-        {para}
-      </p>
-    );
-  });
+  // ReactQuill outputs raw HTML, so we will use dangerouslySetInnerHTML
+  // instead of the previous manual paragraph split parser.
 
   return (
     <div className="bg-white py-12 md:py-20 border-b border-gray-50 animate-fade-in">
@@ -64,9 +51,10 @@ export default function LegalPageLayout({ page, onBack }: LegalPageLayoutProps) 
         </div>
 
         {/* Prose Body */}
-        <div className="max-w-none">
-          {formattedContent}
-        </div>
+        <div 
+          className="max-w-none prose prose-sm sm:prose-base prose-red font-sans text-gray-500 leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: page.content }}
+        />
 
         {/* Trust Seal Banner */}
         <div className="mt-16 p-8 border rounded-3xl bg-brand-gray flex items-start space-x-4">
