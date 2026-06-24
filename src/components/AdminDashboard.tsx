@@ -593,7 +593,7 @@ export default function AdminDashboard({
                   {ser.imageUrl && <img src={ser.imageUrl} alt={ser.title} className="h-36 w-full object-cover" />}
                   <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
-                      <span className="text-[9px] font-mono font-black text-brand-red uppercase bg-brand-red/10 px-2.5 py-1 rounded-lg">FROM £{ser.startingPrice}</span>
+                      <span className="text-[9px] font-mono font-black text-brand-red uppercase bg-brand-red/10 px-2.5 py-1 rounded-lg">FROM ${ser.startingPrice}</span>
                       <h4 className="text-sm font-black text-brand-black font-sans mt-3 uppercase tracking-tight">{ser.title}</h4>
                       <p className="text-[11px] text-gray-400 font-mono mt-1 uppercase tracking-wider">Duration: {ser.duration || "4 Days"}</p>
                       <p className="text-xs text-gray-400 mt-2.5 line-clamp-3 leading-relaxed font-sans">{ser.description}</p>
@@ -1020,7 +1020,7 @@ export default function AdminDashboard({
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Starting Cost (£)</label>
+                <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Starting Cost ($)</label>
                 <input
                   type="number"
                   required
@@ -1131,14 +1131,14 @@ export default function AdminDashboard({
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest block">Rate (e.g. £25)</label>
+                <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest block">Rate (e.g. $25)</label>
                 <input
                   type="text"
                   required
                   value={editingPricing.price || ""}
                   onChange={(e) => setEditingPricing({ ...editingPricing, price: e.target.value })}
                   className="w-full rounded-xl border p-3 focus:outline-none"
-                  placeholder="£15"
+                  placeholder="$15"
                 />
               </div>
 

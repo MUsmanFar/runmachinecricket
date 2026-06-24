@@ -68,7 +68,7 @@ export default function FeaturedServices({
                 
                 {/* Meta price tag overlay */}
                 <div className="absolute top-4 right-4 bg-brand-red py-1.5 px-4 text-[10px] font-mono font-black text-white tracking-[0.2em] uppercase shadow-lg">
-                  FROM £{service.startingPrice}
+                  FROM ${service.startingPrice}
                 </div>
               </div>
 

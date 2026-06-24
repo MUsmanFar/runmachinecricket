@@ -309,7 +309,7 @@ export default function App() {
                           >
                             <div className="relative h-48 overflow-hidden bg-brand-gray">
                               <img src={service.imageUrl} alt={service.title} referrerPolicy="no-referrer" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                              <span className="absolute top-4 right-4 bg-brand-black/90 text-white font-mono text-[10px] uppercase font-black py-1.5 px-3 rounded-xl border border-white/10">FROM £{service.startingPrice}</span>
+                              <span className="absolute top-4 right-4 bg-brand-black/90 text-white font-mono text-[10px] uppercase font-black py-1.5 px-3 rounded-xl border border-white/10">FROM ${service.startingPrice}</span>
                             </div>
                             <div className="p-6 sm:p-8 flex-grow flex flex-col justify-between">
                               <div className="space-y-3">

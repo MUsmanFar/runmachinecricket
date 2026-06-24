@@ -310,24 +310,24 @@ export const defaultTestimonials: Testimonial[] = [
 
 export const defaultPricingTable: PricingLine[] = [
   // Workshop Classics
-  { id: "p1", serviceGroup: "Workshop Classics", serviceName: "Toe Guard Fitting", price: "£10", priceType: "Starting From" },
-  { id: "p2", serviceGroup: "Workshop Classics", serviceName: "Re-Gripping Service", price: "£8", priceType: "Fixed" },
-  { id: "p3", serviceGroup: "Workshop Classics", serviceName: "Bat Oiling & Sealing", price: "£10", priceType: "Fixed" },
-  { id: "p4", serviceGroup: "Workshop Classics", serviceName: "Thread Binding", price: "£12", priceType: "Fixed" },
-  { id: "p5", serviceGroup: "Workshop Classics", serviceName: "Laser Name Engraving", price: "£15", priceType: "Fixed" },
+  { id: "p1", serviceGroup: "Workshop Classics", serviceName: "Toe Guard Fitting", price: "$10", priceType: "Starting From" },
+  { id: "p2", serviceGroup: "Workshop Classics", serviceName: "Re-Gripping Service", price: "$8", priceType: "Fixed" },
+  { id: "p3", serviceGroup: "Workshop Classics", serviceName: "Bat Oiling & Sealing", price: "$10", priceType: "Fixed" },
+  { id: "p4", serviceGroup: "Workshop Classics", serviceName: "Thread Binding", price: "$12", priceType: "Fixed" },
+  { id: "p5", serviceGroup: "Workshop Classics", serviceName: "Laser Name Engraving", price: "$15", priceType: "Fixed" },
 
   // Structural Services
-  { id: "p6", serviceGroup: "Structural Services", serviceName: "Re-Handle (Singapore Cane)", price: "£35", priceType: "Starting From" },
-  { id: "p7", serviceGroup: "Structural Services", serviceName: "Handle Re-Binding", price: "£15", priceType: "Fixed" },
-  { id: "p8", serviceGroup: "Structural Services", serviceName: "Surface Crack Repair", price: "£20", priceType: "Starting From" },
-  { id: "p9", serviceGroup: "Structural Services", serviceName: "Edge Grafts & Rolling", price: "£25", priceType: "Custom Quote" },
-  { id: "p10", serviceGroup: "Structural Services", serviceName: "Shoulder Repairs", price: "£25", priceType: "Custom Quote" },
+  { id: "p6", serviceGroup: "Structural Services", serviceName: "Re-Handle (Singapore Cane)", price: "$35", priceType: "Starting From" },
+  { id: "p7", serviceGroup: "Structural Services", serviceName: "Handle Re-Binding", price: "$15", priceType: "Fixed" },
+  { id: "p8", serviceGroup: "Structural Services", serviceName: "Surface Crack Repair", price: "$20", priceType: "Starting From" },
+  { id: "p9", serviceGroup: "Structural Services", serviceName: "Edge Grafts & Rolling", price: "$25", priceType: "Custom Quote" },
+  { id: "p10", serviceGroup: "Structural Services", serviceName: "Shoulder Repairs", price: "$25", priceType: "Custom Quote" },
 
   // Premium Bundles
-  { id: "p11", serviceGroup: "Premium Bundles", serviceName: "Full Refurbishment Pack", price: "£50", priceType: "Starting From" },
-  { id: "p12", serviceGroup: "Premium Bundles", serviceName: "Full Service Elite Overhaul", price: "£75", priceType: "Starting From" },
-  { id: "p13", serviceGroup: "Premium Bundles", serviceName: "End Of Season Care", price: "£45", priceType: "Fixed" },
-  { id: "p14", serviceGroup: "Premium Bundles", serviceName: "Pre-Season Care Package", price: "£45", priceType: "Fixed" }
+  { id: "p11", serviceGroup: "Premium Bundles", serviceName: "Full Refurbishment Pack", price: "$50", priceType: "Starting From" },
+  { id: "p12", serviceGroup: "Premium Bundles", serviceName: "Full Service Elite Overhaul", price: "$75", priceType: "Starting From" },
+  { id: "p13", serviceGroup: "Premium Bundles", serviceName: "End Of Season Care", price: "$45", priceType: "Fixed" },
+  { id: "p14", serviceGroup: "Premium Bundles", serviceName: "Pre-Season Care Package", price: "$45", priceType: "Fixed" }
 ];
 
 export const defaultLegalPages: LegalPageData[] = [

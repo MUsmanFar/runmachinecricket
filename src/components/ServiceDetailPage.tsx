@@ -60,7 +60,7 @@ export default function ServiceDetailPage({
               
               <span className="flex items-center space-x-1.5 text-brand-black bg-white px-3 py-1.5 rounded-xl shadow-lg">
                 <Tag className="h-3 w-3 text-brand-red" />
-                <span>FROM £{service.startingPrice}</span>
+                <span>FROM ${service.startingPrice}</span>
               </span>
             </div>
 

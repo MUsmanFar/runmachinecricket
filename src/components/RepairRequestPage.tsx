@@ -64,7 +64,7 @@ export default function RepairRequestPage({
   const deliveryOptions = [
     { id: "Ship My Bat", title: "Ship My Bat", desc: "You box and send your bat to our London workshop securely." },
     { id: "Drop Off Personally", title: "Drop Off Personally", desc: "Schedule a time to drop off your bat at our Wembley HQ." },
-    { id: "Pickup Required", title: "Courier Pickup Required", desc: "We arrange DPD or DHL courier pickup directly from your door (£15 fee)." }
+    { id: "Pickup Required", title: "Courier Pickup Required", desc: "We arrange DPD or DHL courier pickup directly from your door ($15 fee)." }
   ];
 
   // Simulated Base64 compression
@@ -268,7 +268,7 @@ export default function RepairRequestPage({
                   >
                     {services.map((service) => (
                       <option key={service.id} value={service.id}>
-                        {service.title} (Starting £{service.startingPrice})
+                        {service.title} (Starting ${service.startingPrice})
                       </option>
                     ))}
                     <option value="custom">Bespoke / Multi-Repair Quote</option>
