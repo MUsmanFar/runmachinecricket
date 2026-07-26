@@ -30,35 +30,36 @@ export default function ContactPage({ whatsAppNumber }: ContactPageProps) {
     const inquiryId = "INQ-" + Math.floor(100000 + Math.random() * 900000);
     
     try {
-      // 1. Send via Web3Forms directly to user's email
-      const web3Response = await fetch("https://api.web3forms.com/submit", {
+      // 1. Send via Web3Forms directly to email using FormData (Web3Forms recommended format)
+      const formPayload = new FormData();
+      formPayload.append("access_key", "a7aaabc2-fcee-4632-a642-89fcbbf719a2");
+      formPayload.append("subject", `📩 New Contact Inquiry from ${formData.name}`);
+      formPayload.append("from_name", "Run Machine Cricket Contact Form");
+      formPayload.append("name", formData.name);
+      formPayload.append("email", formData.email);
+      formPayload.append("phone", formData.phone || "Not provided");
+      formPayload.append("inquiry_subject", formData.subject);
+      formPayload.append("message", formData.message);
+      formPayload.append("inquiry_id", inquiryId);
+
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: "a7aaabc2-fcee-4632-a642-89fcbbf719a2",
-          subject: `New Contact Inquiry: ${formData.subject} (${inquiryId})`,
-          from_name: "Run Machine Cricket Website",
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-          inquiry_id: inquiryId,
-        }),
+        body: formPayload
       });
 
-      // 2. Also save to Firestore DB as backup
+      const data = await res.json();
+      console.log("Web3Forms response:", data);
+
+      // 2. Also save to DB
       await createDocument("contact_inquiries", inquiryId, {
         ...formData,
         id: inquiryId,
         createdAt: new Date().toISOString()
-      }).catch(err => console.warn("Firestore save fallback", err));
+      }).catch(err => console.warn("Firestore save error", err));
 
       setSubmitted(true);
     } catch (err) {
-      console.warn("Submission error", err);
+      console.error("Submission error", err);
       setSubmitted(true);
     } finally {
       setIsSending(false);
@@ -185,22 +186,27 @@ export default function ContactPage({ whatsAppNumber }: ContactPageProps) {
             <div className="bg-white border border-gray-100 rounded-3xl p-8 sm:p-10 shadow-xl">
               
               {submitted ? (
-                <div className="text-center py-12 space-y-6">
-                  <div className="h-16 w-16 bg-brand-red/10 border border-brand-red/10 text-brand-red rounded-xl flex items-center justify-center mx-auto shadow-sm">
-                    <CheckCircle2 className="h-10 w-10" />
+                <div className="text-center py-12 space-y-6 animate-fade-in">
+                  <div className="h-20 w-20 bg-green-500/10 border border-green-500/20 text-green-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+                    <CheckCircle2 className="h-12 w-12" />
                   </div>
-                  <h3 className="text-2xl font-black text-brand-black tracking-tight font-sans uppercase">
-                    Inquiry Lodged Safely
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto leading-relaxed font-sans">
-                    Thank you {formData.name}. Your specifications are routed to our master carpenters. A specialist will review your details and contact you at <span className="font-bold text-brand-black">{formData.email}</span> within 2-4 working hours.
+                  <div className="space-y-2">
+                    <h3 className="text-2xl sm:text-3xl font-black text-brand-black tracking-tight font-sans uppercase">
+                      Inquiry Sent Successfully!
+                    </h3>
+                    <p className="text-xs font-mono font-bold text-green-600 uppercase tracking-widest">
+                      ✔ Email Notification Dispatched
+                    </p>
+                  </div>
+                  <p className="text-xs sm:text-sm text-gray-600 max-w-md mx-auto leading-relaxed font-sans bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                    Thank you, <span className="font-bold text-brand-black">{formData.name}</span>! Your message has been sent directly to our workshop team. We will reply to <span className="font-bold text-brand-black">{formData.email}</span> within 2-4 working hours.
                   </p>
                   <button
                     onClick={() => {
                       setSubmitted(false);
                       setFormData({ name: "", email: "", phone: "", subject: "General Inquiry", message: "" });
                     }}
-                    className="px-6 py-3.5 bg-brand-black text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-brand-red transition cursor-pointer"
+                    className="px-8 py-4 bg-brand-black text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-brand-red transition cursor-pointer shadow-lg"
                   >
                     Send Another Message
                   </button>

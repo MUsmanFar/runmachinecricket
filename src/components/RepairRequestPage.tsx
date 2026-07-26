@@ -120,30 +120,30 @@ export default function RepairRequestPage({
     };
 
     try {
-      // 1. Send via Web3Forms directly to email
-      await fetch("https://api.web3forms.com/submit", {
+      // 1. Send via Web3Forms directly to email using FormData (Web3Forms recommended format)
+      const bookingPayload = new FormData();
+      bookingPayload.append("access_key", "a7aaabc2-fcee-4632-a642-89fcbbf719a2");
+      bookingPayload.append("subject", `⚡ New Bat Repair Booking Ref: ${bookingRef} - ${serviceName}`);
+      bookingPayload.append("from_name", "Run Machine Cricket Repair Booking");
+      bookingPayload.append("booking_ref", bookingRef);
+      bookingPayload.append("name", formData.fullName);
+      bookingPayload.append("email", formData.email);
+      bookingPayload.append("phone", formData.phone);
+      bookingPayload.append("whatsapp", formData.whatsApp || formData.phone);
+      bookingPayload.append("service_requested", serviceName);
+      bookingPayload.append("bat_brand", finalBrand);
+      bookingPayload.append("bat_condition", formData.batCondition);
+      bookingPayload.append("issue_description", formData.description || "No description provided");
+      bookingPayload.append("city", formData.city || "Not provided");
+      bookingPayload.append("delivery_method", formData.deliveryMethod);
+
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: "a7aaabc2-fcee-4632-a642-89fcbbf719a2",
-          subject: `⚡ New Bat Repair Booking Ref: ${bookingRef} - ${serviceName}`,
-          from_name: "Run Machine Cricket Repair Booking",
-          booking_ref: bookingRef,
-          customer_name: formData.fullName,
-          customer_email: formData.email,
-          customer_phone: formData.phone,
-          customer_whatsapp: formData.whatsApp || formData.phone,
-          service_requested: serviceName,
-          bat_brand: finalBrand,
-          bat_condition: formData.batCondition,
-          issue_description: formData.description,
-          city: formData.city,
-          delivery_method: formData.deliveryMethod,
-        }),
-      }).catch(err => console.warn("Web3Forms error", err));
+        body: bookingPayload
+      });
+
+      const resData = await res.json();
+      console.log("Web3Forms booking response:", resData);
 
       // 2. Also save to DB
       await createDocument("repair_requests", bookingRef, requestPayload).catch(err => console.warn("Firestore save error", err));
@@ -151,6 +151,7 @@ export default function RepairRequestPage({
       setLoading(false);
       onSuccess(bookingRef);
     } catch (error) {
+      console.error("Booking submission error:", error);
       setLoading(false);
       onSuccess(bookingRef);
     }
