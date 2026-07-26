@@ -651,11 +651,47 @@ function WorkshopPricingOverview({ pricingData, onBookRepair }: WorkshopPricingO
 // 4. HOME PAGE CONTACT DETAILS
 function HomeContactSection({ whatsAppNumber }: { whatsAppNumber: string }) {
   const [formSent, setFormSent] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    brandModel: "",
+    details: ""
+  });
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSent(true);
-    setTimeout(() => setFormSent(false), 5000);
+    setIsSending(true);
+    const inquiryId = "INQ-" + Math.floor(100000 + Math.random() * 900000);
+
+    try {
+      const formPayload = new FormData();
+      formPayload.append("access_key", "a7aaabc2-fcee-4632-a642-89fcbbf719a2");
+      formPayload.append("subject", `⚡ Quick Diagnostics Enquiry from ${formData.name}`);
+      formPayload.append("from_name", "Run Machine Cricket Quick Enquiry");
+      formPayload.append("name", formData.name);
+      formPayload.append("email", formData.email);
+      formPayload.append("whatsapp", formData.phone);
+      formPayload.append("bat_brand_model", formData.brandModel || "Not provided");
+      formPayload.append("repair_details", formData.details);
+      formPayload.append("inquiry_id", inquiryId);
+
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formPayload
+      });
+
+      const resData = await res.json();
+      console.log("Web3Forms homepage enquiry response:", resData);
+
+      setFormSent(true);
+    } catch (err) {
+      console.error("Enquiry submission error:", err);
+      setFormSent(true);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -704,42 +740,92 @@ function HomeContactSection({ whatsAppNumber }: { whatsAppNumber: string }) {
             <p className="text-xs text-gray-400 mb-6 uppercase tracking-wider">Fill in our workshop diagnostics form below</p>
 
             {formSent ? (
-              <div className="p-6 bg-brand-red/5 border border-brand-red/10 text-brand-red text-xs sm:text-sm rounded-2xl flex flex-col items-center space-y-3 text-center">
-                <CheckCircle className="h-8 w-8 text-brand-red" />
-                <p className="font-black uppercase tracking-wider">Enquiry Lodged Successfully</p>
-                <p className="text-gray-500 font-sans">Our master carpenter will review your specifications and contact you on WhatsApp shortly.</p>
+              <div className="p-8 bg-green-50 border border-green-200 text-green-800 text-xs sm:text-sm rounded-2xl flex flex-col items-center space-y-3 text-center animate-fade-in shadow-sm">
+                <div className="h-14 w-14 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 flex items-center justify-center">
+                  <CheckCircle className="h-8 w-8 text-green-600" />
+                </div>
+                <p className="font-black uppercase tracking-wider text-green-700 text-base">Enquiry Sent Successfully!</p>
+                <p className="text-xs font-mono font-bold text-green-600 uppercase tracking-widest">✔ Email Notification Dispatched</p>
+                <p className="text-gray-600 font-sans max-w-sm">Our master carpenter will review your specifications and contact you at <span className="font-bold text-brand-black">{formData.email}</span> shortly.</p>
+                <button
+                  onClick={() => {
+                    setFormSent(false);
+                    setFormData({ name: "", email: "", phone: "", brandModel: "", details: "" });
+                  }}
+                  className="mt-2 px-6 py-2.5 bg-brand-black text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-brand-red transition cursor-pointer"
+                >
+                  Send Another Enquiry
+                </button>
               </div>
             ) : (
               <form onSubmit={handleFormSubmit} className="space-y-4 font-sans text-xs sm:text-sm">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="font-bold text-gray-600 uppercase tracking-wider">Full Name</label>
-                    <input required type="text" className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" placeholder="Usman Farooq" />
+                    <label className="font-bold text-gray-600 uppercase tracking-wider">Full Name *</label>
+                    <input 
+                      required 
+                      type="text" 
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" 
+                      placeholder="Usman Farooq" 
+                    />
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-gray-600 uppercase tracking-wider">Email Direct</label>
-                    <input required type="email" className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" placeholder="usman@gmail.com" />
+                    <label className="font-bold text-gray-600 uppercase tracking-wider">Email Direct *</label>
+                    <input 
+                      required 
+                      type="email" 
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" 
+                      placeholder="usman@gmail.com" 
+                    />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="font-bold text-gray-600 uppercase tracking-wider">WhatsApp Number</label>
-                    <input required type="text" className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" placeholder="+1 (856) 287-3131" />
+                    <label className="font-bold text-gray-600 uppercase tracking-wider">WhatsApp Number *</label>
+                    <input 
+                      required 
+                      type="text" 
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" 
+                      placeholder="+1 (856) 287-3131" 
+                    />
                   </div>
                   <div className="space-y-1">
                     <label className="font-bold text-gray-600 uppercase tracking-wider">Bat Brand & Model</label>
-                    <input type="text" className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" placeholder="Gray-Nicolls Kaboom" />
+                    <input 
+                      type="text" 
+                      value={formData.brandModel}
+                      onChange={(e) => setFormData({ ...formData, brandModel: e.target.value })}
+                      className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" 
+                      placeholder="Gray-Nicolls Kaboom" 
+                    />
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-bold text-gray-600 uppercase tracking-wider">Condition & Repair Specifics</label>
-                  <textarea required rows={4} className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" placeholder="Specify click sounds in the handle, deep toe grain splits, or if you need custom knock-in..."></textarea>
+                  <label className="font-bold text-gray-600 uppercase tracking-wider">Condition & Repair Specifics *</label>
+                  <textarea 
+                    required 
+                    rows={4} 
+                    value={formData.details}
+                    onChange={(e) => setFormData({ ...formData, details: e.target.value })}
+                    className="w-full border border-gray-200 rounded-xl py-3 px-4 focus:outline-brand-red" 
+                    placeholder="Specify click sounds in the handle, deep toe grain splits, or if you need custom knock-in..."
+                  ></textarea>
                 </div>
 
-                <button type="submit" className="w-full rounded-xl bg-brand-black hover:bg-brand-red text-white py-4 text-xs font-black uppercase tracking-widest cursor-pointer transition-all shadow-md">
-                  SUBMIT DIAGNOSTICS ENQUIRY
+                <button 
+                  type="submit" 
+                  disabled={isSending}
+                  className="w-full rounded-xl bg-brand-black hover:bg-brand-red text-white py-4 text-xs font-black uppercase tracking-widest cursor-pointer transition-all shadow-md disabled:opacity-50"
+                >
+                  {isSending ? "SENDING ENQUIRY..." : "SUBMIT DIAGNOSTICS ENQUIRY"}
                 </button>
               </form>
             )}
