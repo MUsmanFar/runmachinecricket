@@ -57,9 +57,8 @@ export default function AboutUs() {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-brand-red/5 to-transparent rounded-3xl -z-10" />
             <img
-              src="https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&q=80&w=800"
+              src="/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (5).jpeg"
               alt="Wood craftsmanship workshop"
-              referrerPolicy="no-referrer"
               className="rounded-3xl border border-gray-100 shadow-2xl w-full object-cover h-[450px]"
             />
           </div>

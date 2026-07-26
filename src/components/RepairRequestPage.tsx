@@ -62,9 +62,9 @@ export default function RepairRequestPage({
 
   // Delivery Options
   const deliveryOptions = [
-    { id: "Ship My Bat", title: "Ship My Bat", desc: "You box and send your bat to our London workshop securely." },
-    { id: "Drop Off Personally", title: "Drop Off Personally", desc: "Schedule a time to drop off your bat at our Wembley HQ." },
-    { id: "Pickup Required", title: "Courier Pickup Required", desc: "We arrange DPD or DHL courier pickup directly from your door ($15 fee)." }
+    { id: "Ship My Bat", title: "Ship My Bat", desc: "You box and send your bat to our workshop securely." },
+    { id: "Drop Off Personally", title: "Drop Off Personally", desc: "Schedule a time to drop off your bat at our Philadelphia Suburbs location." },
+    { id: "Pickup Required", title: "Courier Pickup Required", desc: "We arrange courier pickup directly from your door ($15 fee)." }
   ];
 
   // Simulated Base64 compression
@@ -120,24 +120,38 @@ export default function RepairRequestPage({
     };
 
     try {
-      await createDocument("repair_requests", bookingRef, requestPayload);
-      
-      // Trigger Email Notification
-      try {
-        await fetch("/api/sendEmail", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ type: "repair_request", payload: requestPayload })
-        });
-      } catch (emailErr) {
-        console.warn("Email notification failed to send", emailErr);
-      }
+      // 1. Send via Web3Forms directly to email
+      await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "a7aaabc2-fcee-4632-a642-89fcbbf719a2",
+          subject: `⚡ New Bat Repair Booking Ref: ${bookingRef} - ${serviceName}`,
+          from_name: "Run Machine Cricket Repair Booking",
+          booking_ref: bookingRef,
+          customer_name: formData.fullName,
+          customer_email: formData.email,
+          customer_phone: formData.phone,
+          customer_whatsapp: formData.whatsApp || formData.phone,
+          service_requested: serviceName,
+          bat_brand: finalBrand,
+          bat_condition: formData.batCondition,
+          issue_description: formData.description,
+          city: formData.city,
+          delivery_method: formData.deliveryMethod,
+        }),
+      }).catch(err => console.warn("Web3Forms error", err));
+
+      // 2. Also save to DB
+      await createDocument("repair_requests", bookingRef, requestPayload).catch(err => console.warn("Firestore save error", err));
 
       setLoading(false);
       onSuccess(bookingRef);
     } catch (error) {
       setLoading(false);
-      // Fallback
       onSuccess(bookingRef);
     }
   };

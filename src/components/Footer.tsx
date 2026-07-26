@@ -85,7 +85,7 @@ export default function Footer({ onNavigate, onNavigateLegal, settings }: Footer
               </div>
               <div className="flex items-center space-x-3 text-white">
                 <Mail className="h-4 w-4 text-brand-red" />
-                <span>{settings?.email || "craft@runmachine.co.uk"}</span>
+                <span>{settings?.email || "runmachinecricket49@gmail.com"}</span>
               </div>
             </div>
 

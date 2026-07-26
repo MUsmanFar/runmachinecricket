@@ -58,7 +58,7 @@ export default function FeaturedServices({
                 <img
                   src={
                     service.imageUrl ||
-                    "/images/bat_full_refurb.png"
+                    "/images/WhatsApp Image 2026-07-26 at 5.36.39 PM.jpeg"
                   }
                   alt={service.title}
                   referrerPolicy="no-referrer"

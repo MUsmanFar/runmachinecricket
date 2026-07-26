@@ -667,9 +667,9 @@ function HomeContactSection({ whatsAppNumber }: { whatsAppNumber: string }) {
           <div className="lg:col-span-5 space-y-8">
             <div className="space-y-2">
               <p className="text-xs font-mono font-black tracking-widest text-brand-red uppercase">WORKSHOP ACCURACIES</p>
-              <h2 className="text-3xl sm:text-4xl font-display font-black tracking-tight text-brand-black uppercase">CONTACT OUR LONDON LAB</h2>
+              <h2 className="text-3xl sm:text-4xl font-display font-black tracking-tight text-brand-black uppercase">CONTACT OUR WORKSHOP</h2>
               <p className="text-sm text-gray-500 font-sans leading-relaxed">
-                Send your timber coordinates or schedule a direct visit to watch our automatic pressing rollers in real-time.
+                Send your timber coordinates or submit an online repair enquiry to get started.
               </p>
             </div>
 
@@ -679,10 +679,9 @@ function HomeContactSection({ whatsAppNumber }: { whatsAppNumber: string }) {
                   L
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-brand-black uppercase tracking-tight">Main Workshop Headquarters</h4>
+                  <h4 className="font-extrabold text-brand-black uppercase tracking-tight">Workshop Location</h4>
                   <p className="text-gray-500 mt-1">Run Machine Cricket Repair Labs</p>
-                  <p className="text-gray-500">Suite 12, Wembley Commercial Center</p>
-                  <p className="text-gray-500">Wembley, London, HA9 0TH</p>
+                  <p className="text-gray-500 font-bold text-brand-black">Philadelphia Suburbs</p>
                 </div>
               </div>
 
@@ -693,7 +692,7 @@ function HomeContactSection({ whatsAppNumber }: { whatsAppNumber: string }) {
                 <div>
                   <h4 className="font-extrabold text-brand-black uppercase tracking-tight">Support Lines</h4>
                   <p className="text-gray-500 mt-1">WhatsApp Desk: {whatsAppNumber}</p>
-                  <p className="text-gray-500">Email Direct: info@runmachinecricket.co.uk</p>
+                  <p className="text-gray-500">Email Direct: runmachinecricket49@gmail.com</p>
                 </div>
               </div>
             </div>

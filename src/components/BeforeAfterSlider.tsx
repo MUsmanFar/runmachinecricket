@@ -51,7 +51,7 @@ export default function BeforeAfterSlider() {
           >
             {/* After Image (Background) */}
             <img 
-              src="/images/bat_full_refurb.png" 
+              src="/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (3).jpeg" 
               alt="Bat After Repair" 
               className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               loading="lazy"
@@ -62,7 +62,7 @@ export default function BeforeAfterSlider() {
 
             {/* Before Image (Foreground, Clipped via clip-path) */}
             <img 
-              src="/images/bat_edge_repair.png" 
+              src="/images/WhatsApp Image 2026-07-26 at 5.38.25 PM.jpeg" 
               alt="Bat Before Repair" 
               className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10"
               style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}

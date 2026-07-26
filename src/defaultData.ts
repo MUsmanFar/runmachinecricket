@@ -3,11 +3,11 @@ import { Service, Testimonial, PricingLine, LegalPageData, HomepageContent, Busi
 export const defaultSettings: BusinessSettings = {
   id: "general",
   businessName: "Run Machine Cricket",
-  phone: "+44 7712 345678",
+  phone: "+1 (856) 287-3131",
   whatsApp: "18562873131",
-  email: "info@runmachinecricket.co.uk",
-  notificationEmail: "admin@runmachinecricket.co.uk",
-  address: "Suite 12, Wembley Commercial Center, Wembley, London, HA9 0TH",
+  email: "runmachinecricket49@gmail.com",
+  notificationEmail: "runmachinecricket49@gmail.com",
+  address: "Philadelphia Suburbs",
   facebookUrl: "https://facebook.com/runmachinecricket",
   instagramUrl: "https://instagram.com/runmachinecricket"
 };
@@ -19,9 +19,9 @@ export const defaultServices: Service[] = [
     description: "General structural diagnostics and spot mending. We treat fiber tears, secure loose surface splinters, repair minor shoulder fissures, and restore the bat's natural swing profile using elite workspace clamping techniques.",
     startingPrice: 25,
     duration: "2 - 3 Days",
-    imageUrl: "/images/workshop_bench.png",
-    beforeImageUrl: "/images/bat_edge_repair.png",
-    afterImageUrl: "/images/bat_knocking_in.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.39 PM.jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM (1).jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (1).jpeg",
     faqs: [
       { question: "What is general mending suitable for?", answer: "Perfect for lightweight surface splinters or minor split back shoulders before they expand." }
     ]
@@ -32,9 +32,9 @@ export const defaultServices: Service[] = [
     description: "Multi-point fissure sealing. We clear dirt from surface cracks, inject high-grade flexible polymer wood-bonding epoxy, clamp the cleft under high hydraulic pressure, and finish with a micro-sanded smooth layer.",
     startingPrice: 20,
     duration: "2 Days",
-    imageUrl: "/images/bat_full_refurb.png",
-    beforeImageUrl: "/images/bat_pressing_machine.png",
-    afterImageUrl: "/images/workshop_bench.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.39 PM (1).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM (2).jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (2).jpeg",
     faqs: [
       { question: "Are surface cracks normal?", answer: "Yes, they are common playing battle scars, but they must be glued quickly to prevent catastrophic snapping." }
     ]
@@ -45,9 +45,9 @@ export const defaultServices: Service[] = [
     description: "Our hallmark signature transformation. We strip old stickers, sand back the entire willow blade, lift minor playing dents, seal cracks, fit a new premium grip, apply dual-cycle cold-press linseed oil, and hand-buff for an ultra-premium satin shine.",
     startingPrice: 50,
     duration: "4 - 5 Days",
-    imageUrl: "/images/bat_edge_repair.png",
-    beforeImageUrl: "/images/bat_knocking_in.png",
-    afterImageUrl: "/images/bat_full_refurb.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.39 PM (2).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (3).jpeg",
     faqs: [
       { question: "Are new stickers included?", answer: "We sand off old stickers and can either preserve your clear wood look, apply generic protectives, or mount custom stickers supplied by you." }
     ]
@@ -58,9 +58,9 @@ export const defaultServices: Service[] = [
     description: "Personalize your weapon of choice. Using our precision digital laser engraving system, we can carve your name, initials, or squad number directly into the wood grain without affecting the bat's structural density or integrity.",
     startingPrice: 15,
     duration: "1 Day",
-    imageUrl: "/images/bat_pressing_machine.png",
-    beforeImageUrl: "/images/workshop_bench.png",
-    afterImageUrl: "/images/bat_edge_repair.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.40 PM.jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.26 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (4).jpeg",
     faqs: [
       { question: "Does engraving hurt the bat's performance?", answer: "Not at all. The laser etching depth is calibrated to less than 0.2mm, keeping the sweet spot and power fully intact." }
     ]
@@ -71,9 +71,9 @@ export const defaultServices: Service[] = [
     description: "Fine-tune your bat's pickup. We selectively shave wood from key non-structural points along the spine or scalloped cavity, shifting the center of balance upward to make your bat feel up to 2 ounces lighter in the hands.",
     startingPrice: 40,
     duration: "3 Days",
-    imageUrl: "/images/bat_knocking_in.png",
-    beforeImageUrl: "/images/bat_full_refurb.png",
-    afterImageUrl: "/images/bat_pressing_machine.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.37.02 PM.jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.28 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (5).jpeg",
     faqs: [
       { question: "How much weight can you safely shave off?", answer: "Usually 1 to 3 ounces. We always balance structural safety with the optimum pickup profile." }
     ]
@@ -84,9 +84,9 @@ export const defaultServices: Service[] = [
     description: "The traditional, gold-standard preparation. Our skilled craftsmen manually strike the bat over 10,000 times using a heavy hickory mallet, carefully modeling the rounded edges, toe section, and sweet spot to guarantee match-ready hardening.",
     startingPrice: 30,
     duration: "3 - 4 Days",
-    imageUrl: "/images/workshop_bench.png",
-    beforeImageUrl: "/images/bat_edge_repair.png",
-    afterImageUrl: "/images/bat_knocking_in.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM.jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.30 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (1).jpeg",
     faqs: [
       { question: "Why is hand-knocking preferred over machine only?", answer: "Hand knocking allows our craftsman to feel and adapt to soft grain pockets, ensuring complete custom protection." }
     ]
@@ -97,9 +97,9 @@ export const defaultServices: Service[] = [
     description: "Rapid mechanized fiber preparation. We load your bat into our customized automated knocking rig, executing pre-calculated strikes that safely condense the outer willow layers for deep defense against seam marks.",
     startingPrice: 25,
     duration: "1 - 2 Days",
-    imageUrl: "/images/bat_full_refurb.png",
-    beforeImageUrl: "/images/bat_pressing_machine.png",
-    afterImageUrl: "/images/workshop_bench.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (1).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM (1).jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (2).jpeg",
     faqs: [
       { question: "Is machine hitting completely safe?", answer: "Yes, our automated rig is specifically calibrated to strike with the exact pneumatic force suitable for premium English willow." }
     ]
@@ -110,9 +110,9 @@ export const defaultServices: Service[] = [
     description: "Our high-tech roll pressing procedure. We feed the blade through our custom-calibrated wood pressing machine. This process compresses new or soft willow fibers uniformly, hardening the face and maximizing the spring/ping effect.",
     startingPrice: 20,
     duration: "1 Day",
-    imageUrl: "/images/bat_edge_repair.png",
-    beforeImageUrl: "/images/bat_knocking_in.png",
-    afterImageUrl: "/images/bat_full_refurb.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (2).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM (2).jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (3).jpeg",
     faqs: [
       { question: "What is the purpose of pressing?", answer: "Pressing compresses wood cells and brings back natural resilience, crucial for a high-performing sweet spot." }
     ]
@@ -123,9 +123,9 @@ export const defaultServices: Service[] = [
     description: "Is your bat handle clicked or loose? We surgically pull out your existing damaged handle and slot in a professional-grade concentric triple-spring Singapore cane handle, wrapped with cork damping layer for maximum shock absorption.",
     startingPrice: 35,
     duration: "3 - 4 Days",
-    imageUrl: "/images/bat_pressing_machine.png",
-    beforeImageUrl: "/images/workshop_bench.png",
-    afterImageUrl: "/images/bat_edge_repair.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (3).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (4).jpeg",
     faqs: [
       { question: "How do I know if my handle is cracked?", answer: "A loose handle often clicks distinctively when you strike ball shadows, or has a small twist when holding." }
     ]
@@ -136,9 +136,9 @@ export const defaultServices: Service[] = [
     description: "Enhance your grip structure. We strip the outer layer, tightly bind the cane handle with heavy-duty structural thread under high torque, and double-seal it with professional water-resistant shellac compound.",
     startingPrice: 15,
     duration: "1 - 2 Days",
-    imageUrl: "/images/bat_knocking_in.png",
-    beforeImageUrl: "/images/bat_full_refurb.png",
-    afterImageUrl: "/images/bat_pressing_machine.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (4).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.26 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (5).jpeg",
     faqs: [
       { question: "What is handle binding?", answer: "The string wrapping under your rubber grip. It binds the cane pieces together tightly to preserve structural flex." }
     ]
@@ -149,9 +149,9 @@ export const defaultServices: Service[] = [
     description: "Nourishment for high-performance wood. We apply two precise, hand-rubbed cycles of raw, double-filtered English linseed oil to retain natural moisture and lock out dry-cracking split vulnerabilities.",
     startingPrice: 10,
     duration: "1 - 2 Days",
-    imageUrl: "/images/workshop_bench.png",
-    beforeImageUrl: "/images/bat_edge_repair.png",
-    afterImageUrl: "/images/bat_knocking_in.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (5).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.28 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM.jpeg",
     faqs: [
       { question: "Can a bat be over-oiled?", answer: "Yes! Over-oiling waterlogs the wood cell fibers making the bat feel heavy and dead inside. We use calibrated cycles." }
     ]
@@ -162,9 +162,9 @@ export const defaultServices: Service[] = [
     description: "Give your bat a clean cosmetic transformation. We remove legacy sticker glue, compound sand the wood clean, and apply brand new premium dynamic protective decals or customized stickering supplied by you.",
     startingPrice: 20,
     duration: "1 - 2 Days",
-    imageUrl: "/images/bat_full_refurb.png",
-    beforeImageUrl: "/images/bat_pressing_machine.png",
-    afterImageUrl: "/images/workshop_bench.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.39 PM.jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.30 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (1).jpeg",
     faqs: [
       { question: "Can I supply my own branded decals?", answer: "Absolutely. We will sand, align, and professionally dry-seal your supplied stickers to avoid bubbles or lifting." }
     ]
@@ -175,9 +175,9 @@ export const defaultServices: Service[] = [
     description: "Mend heavily shattered edges. We scoop out dead, soft impact wood from the edge splits, graft a high-density raw willow insert block, seal it under extreme pressure, and custom-roll the margins to match the original curvature.",
     startingPrice: 25,
     duration: "3 Days",
-    imageUrl: "/images/bat_edge_repair.png",
-    beforeImageUrl: "/images/bat_knocking_in.png",
-    afterImageUrl: "/images/bat_full_refurb.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.39 PM (1).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM (1).jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (2).jpeg",
     faqs: [
       { question: "Is a grafted edge as strong as the original?", answer: "Yes, our cross-graft gluing creates a bond stronger than the surrounding wood cells, returning the rebound bounce." }
     ]
@@ -188,9 +188,9 @@ export const defaultServices: Service[] = [
     description: "Guard against yorkers and water swell. We clean the base of the bat, treat it, and fit a professional-grade vulcanized rubber toe guard block using industrial water-resistant adhesives. Formulated for ultimate floor protection.",
     startingPrice: 10,
     duration: "1 Day",
-    imageUrl: "/images/bat_pressing_machine.png",
-    beforeImageUrl: "/images/workshop_bench.png",
-    afterImageUrl: "/images/bat_edge_repair.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.39 PM (2).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM (2).jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (3).jpeg",
     faqs: [
       { question: "Why fit a toe guard?", answer: "It seals the raw grain from absorbing damp turf moisture when standing at the crease, preventing splitting." }
     ]
@@ -201,9 +201,9 @@ export const defaultServices: Service[] = [
     description: "Fresh premium rubber handle installation. We strip the dry handle rubber and reload it with a pro-approved high-tactility octopus or dynamic matrix rubber pattern. Maximizes comfort and swing control.",
     startingPrice: 8,
     duration: "1 Day",
-    imageUrl: "/images/bat_knocking_in.png",
-    beforeImageUrl: "/images/bat_full_refurb.png",
-    afterImageUrl: "/images/bat_pressing_machine.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.40 PM.jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (4).jpeg",
     faqs: [
       { question: "How often should I change my grip?", answer: "For ideal control, we recommend fitting a fresh grip at the start of every season, or whenever the rubber hardens." }
     ]
@@ -214,9 +214,9 @@ export const defaultServices: Service[] = [
     description: "Reinforce fine surface splinters. We tightly bind weak wood zones along the face or edge borders with high-strength composite thread, creating structural sleeves that stop splits from expanding under load.",
     startingPrice: 12,
     duration: "1 Day",
-    imageUrl: "/images/workshop_bench.png",
-    beforeImageUrl: "/images/bat_edge_repair.png",
-    afterImageUrl: "/images/bat_knocking_in.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.37.02 PM.jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.26 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (5).jpeg",
     faqs: [
       { question: "Will the thread alter the ping?", answer: "We use ultra-slim Kevlar threads that bind wood fibers without deadening the rebound velocity." }
     ]
@@ -227,9 +227,9 @@ export const defaultServices: Service[] = [
     description: "Meticulous shoulder cleft stabilization. Impact or dropping can split the thin shoulder profile. We clean the neck region, apply flexible wood resin, clamp it, and bind the shoulders cleanly to restore maximum stiffness.",
     startingPrice: 25,
     duration: "2 - 3 Days",
-    imageUrl: "/images/bat_full_refurb.png",
-    beforeImageUrl: "/images/bat_pressing_machine.png",
-    afterImageUrl: "/images/workshop_bench.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM.jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.28 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM.jpeg",
     faqs: [
       { question: "Can shoulder splitting ruin the bat?", answer: "Left untreated, the handle joint will separate. Repairing it quickly completely protects your bat's longevity." }
     ]
@@ -240,9 +240,9 @@ export const defaultServices: Service[] = [
     description: "The complete luxury workshop overhaul. Includes fully mending superficial fissures, full-surface roll pressing, triple oiling, brand-new custom toe guard, professional handle re-binding, a fresh premium grip, and mirror buffing.",
     startingPrice: 75,
     duration: "5 - 6 Days",
-    imageUrl: "/images/bat_edge_repair.png",
-    beforeImageUrl: "/images/bat_knocking_in.png",
-    afterImageUrl: "/images/bat_full_refurb.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.39 PM.jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM (1).jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (1).jpeg",
     faqs: [
       { question: "Who is this premium overhaul package for?", answer: "Highly recommended for professional players or cricketers looking to give their prized heirloom bats another life." }
     ]
@@ -253,9 +253,9 @@ export const defaultServices: Service[] = [
     description: "Bespoke hibernation preparation. We clean of dirt and grass marks, extract embedded moisture, lightly seal surface fissures, oil the blade, and store it in our clinical climate-controlled curing room to prevent storage wood rot.",
     startingPrice: 45,
     duration: "3 Days",
-    imageUrl: "/images/bat_pressing_machine.png",
-    beforeImageUrl: "/images/workshop_bench.png",
-    afterImageUrl: "/images/bat_edge_repair.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.39 PM (1).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.30 PM.jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (2).jpeg",
     faqs: [
       { question: "Why is post-season storage treatment important?", answer: "Leaving bats with season dampness trapped inside over winter causes wood decay and fiber embrittlement." }
     ]
@@ -266,9 +266,9 @@ export const defaultServices: Service[] = [
     description: "Wake your bat up for play. We remove winter oxidation, execute a light machine roll-pressing process to re-activate the willow's springiness, apply linseed sealing, fit a fresh grip and custom face scuff protector.",
     startingPrice: 45,
     duration: "3 Days",
-    imageUrl: "/images/bat_knocking_in.png",
-    beforeImageUrl: "/images/bat_full_refurb.png",
-    afterImageUrl: "/images/bat_pressing_machine.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.36.39 PM (2).jpeg",
+    beforeImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.25 PM (2).jpeg",
+    afterImageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (3).jpeg",
     faqs: [
       { question: "Does my bat need a wake up session?", answer: "Definitely. Cured winter timber becomes dry and stiff. Re-pressing/conditioning is vital to avoid sudden shock cracks." }
     ]
@@ -383,42 +383,42 @@ export interface WorkshopGalleryItem {
 export const defaultGallery: WorkshopGalleryItem[] = [
   {
     id: "gal-1",
-    imageUrl: "/images/workshop_bench.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (1).jpeg",
     title: "Polished Willow Face Grid",
     category: "Before/After",
     description: "Fully completed premium refurbishment displaying clean wood grain patterns."
   },
   {
     id: "gal-2",
-    imageUrl: "/images/bat_edge_repair.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (2).jpeg",
     title: "Master Craftsman Chiseling",
     category: "Workshop",
     description: "Custom shaping a handle inset block with precise hand woodcutting tools."
   },
   {
     id: "gal-3",
-    imageUrl: "/images/bat_knocking_in.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (3).jpeg",
     title: "Fiber Split Pre-treatment",
     category: "Repair",
     description: "Saddled splits along the back shoulders before gluing and hydraulic clamping."
   },
   {
     id: "gal-4",
-    imageUrl: "/images/bat_full_refurb.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (4).jpeg",
     title: "Precision Sanding Bench",
     category: "Workshop",
     description: "Sanding back old stickers and grass blemishes to expose raw quality timber."
   },
   {
     id: "gal-5",
-    imageUrl: "/images/bat_pressing_machine.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM (5).jpeg",
     title: "Applying Singapore Cane Handle",
     category: "Workshop",
     description: "Assembling triple-spring handle into the custom wedge splice."
   },
   {
     id: "gal-6",
-    imageUrl: "/images/workshop_bench.png",
+    imageUrl: "/images/WhatsApp Image 2026-07-26 at 5.38.31 PM.jpeg",
     title: "Before & After Surface Split",
     category: "Before/After",
     description: "Seamless edge grafting and pressure rolling that completely returns sweet spot ping."

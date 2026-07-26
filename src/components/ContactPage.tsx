@@ -30,24 +30,35 @@ export default function ContactPage({ whatsAppNumber }: ContactPageProps) {
     const inquiryId = "INQ-" + Math.floor(100000 + Math.random() * 900000);
     
     try {
-      // Save to Firestore
+      // 1. Send via Web3Forms directly to user's email
+      const web3Response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "a7aaabc2-fcee-4632-a642-89fcbbf719a2",
+          subject: `New Contact Inquiry: ${formData.subject} (${inquiryId})`,
+          from_name: "Run Machine Cricket Website",
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          inquiry_id: inquiryId,
+        }),
+      });
+
+      // 2. Also save to Firestore DB as backup
       await createDocument("contact_inquiries", inquiryId, {
         ...formData,
         id: inquiryId,
         createdAt: new Date().toISOString()
-      });
+      }).catch(err => console.warn("Firestore save fallback", err));
 
-      // Trigger Email
-      await fetch("/api/sendEmail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "contact_inquiry", payload: formData })
-      });
-      
       setSubmitted(true);
     } catch (err) {
       console.warn("Submission error", err);
-      // Fallback
       setSubmitted(true);
     } finally {
       setIsSending(false);
@@ -95,25 +106,23 @@ export default function ContactPage({ whatsAppNumber }: ContactPageProps) {
                 <div className="flex items-start space-x-3">
                   <MapPin className="h-5 w-5 text-brand-red shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-extrabold text-white uppercase tracking-tight">Our Main Address</p>
-                    <p className="text-gray-400 mt-1">Unit 4, Olympic Industrial Park</p>
-                    <p className="text-gray-400">London Road, Wembley, HA9 0TH</p>
-                    <p className="text-gray-400">United Kingdom</p>
+                    <p className="font-extrabold text-white uppercase tracking-tight font-sans">Our Location</p>
+                    <p className="text-gray-300 font-bold mt-1">Philadelphia Suburbs</p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <Mail className="h-5 w-5 text-brand-red shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-extrabold text-white uppercase tracking-tight">Email Address</p>
-                    <p className="text-gray-400 mt-1">craft@runmachinecricket.co.uk</p>
+                    <p className="font-extrabold text-white uppercase tracking-tight font-sans">Email Address</p>
+                    <p className="text-gray-400 mt-1">runmachinecricket49@gmail.com</p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <Phone className="h-5 w-5 text-brand-red shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-extrabold text-white uppercase tracking-tight">Direct Phone Line</p>
+                    <p className="font-extrabold text-white uppercase tracking-tight font-sans">Direct Phone Line</p>
                     <p className="text-gray-400 mt-1">+1 (856) 287-3131</p>
                   </div>
                 </div>
@@ -143,36 +152,28 @@ export default function ContactPage({ whatsAppNumber }: ContactPageProps) {
 
             </div>
 
-            {/* Simulated Live Google Map View with pure interactive design */}
+            {/* Simulated Live Location Pin */}
             <div className="border border-gray-100 bg-brand-gray rounded-3xl p-6 shadow-sm overflow-hidden text-center">
               <div className="flex items-center justify-center space-x-2 text-[10px] font-mono font-black text-gray-500 uppercase mb-4 tracking-widest">
                 <span className="h-2 w-2 rounded-full bg-brand-red animate-pulse" />
-                <span>Simulated Workshop Locator Pin</span>
+                <span>Workshop Location Pin</span>
               </div>
               
-              <div className="h-48 w-full bg-gray-200 rounded-2xl relative overflow-hidden flex items-center justify-center border border-gray-305">
-                
-                {/* Visual grid pattern simulating map lines */}
+              <div className="h-48 w-full bg-gray-200 rounded-2xl relative overflow-hidden flex items-center justify-center border border-gray-300">
                 <div className="absolute inset-0 bg-brand-red/5 grid grid-cols-6 grid-rows-4 divide-x divide-y divide-brand-red/10 animate-pulse" />
                 
-                {/* Landmark indicators */}
-                <div className="absolute top-1/4 left-1/4 h-3 rounded bg-white px-2 py-0.5 text-[8px] font-mono font-bold text-gray-400 shadow border uppercase">Wembley Rd</div>
-                <div className="absolute top-2/3 right-1/4 h-3 rounded bg-white px-2 py-0.5 text-[8px] font-mono font-bold text-gray-400 shadow border uppercase">Olympic Crossing</div>
-
-                {/* Simulated Pin */}
                 <div className="relative z-10 flex flex-col items-center">
                   <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-brand-red border-2 border-white text-white shadow-xl animate-bounce">
                     <MapPin className="h-4 w-4" />
                   </div>
                   <span className="mt-2 rounded-lg bg-brand-black text-[9px] font-mono font-black tracking-widest text-white px-3 py-1 uppercase shadow-md border border-white/5">
-                    Run Machine HQ HA9
+                    Philadelphia Suburbs
                   </span>
                 </div>
-
               </div>
 
               <p className="text-[11px] text-gray-450 mt-3 font-sans max-w-sm mx-auto leading-relaxed">
-                Located 5 minutes from Wembley Stadium. Easy private driveway access for express trunk drop-offs and drive-through checkouts.
+                Serving cricketers across Philadelphia Suburbs and nationwide shipping.
               </p>
             </div>
 
