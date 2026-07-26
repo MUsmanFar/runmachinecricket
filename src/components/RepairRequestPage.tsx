@@ -228,7 +228,7 @@ export default function RepairRequestPage({
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">WhatsApp Number (For progress pics)</label>
+                  <label className="text-[10px] font-mono font-black text-gray-700 uppercase tracking-widest">Phone Number</label>
                   <input
                     type="tel"
                     placeholder="e.g. +44 7712 345678"

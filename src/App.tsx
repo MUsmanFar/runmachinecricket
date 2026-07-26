@@ -786,7 +786,7 @@ function HomeContactSection({ whatsAppNumber }: { whatsAppNumber: string }) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="font-bold text-gray-600 uppercase tracking-wider">WhatsApp Number *</label>
+                    <label className="font-bold text-gray-600 uppercase tracking-wider">Phone Number *</label>
                     <input 
                       required 
                       type="text" 
